@@ -1,0 +1,21 @@
+# record http api
+- URL: http://{$HOST}/record
+    - METHOD: GET
+        - BODY: JSON
+            - TAG: STRING { DECRIPTION: A REGEX }
+    - METHOD: POST
+        - BODY: JSON     
+            <!-- 
+            - front_content: ARRAY of JSON
+                - form: STRING { SCOPE: ["TEXT", "IMAGE", "AUDIO", "VIDEO"] }
+                - data: STRING
+            - back_content: ARRAY of JSON
+                - form: STRING { SCOPE: ["TEXT", "IMAGE", "AUDIO", "VIDEO"] }
+                - data: STRING
+             -->
+            - content: ARRAY of JSON
+                - form: STRING { SCOPE: ["TEXT", "IMAGE", "AUDIO", "VIDEO"] }
+                - data: STRING
+                - cover: INT { DESCRIPTION: {0: FRONT, 1: BACK} }
+            - tag: []STRING     
+            - reminder: INT { DESCRIPTION: {0: NEED TO REMIND, 1: DONNOT REMIND} }
