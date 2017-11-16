@@ -31,11 +31,13 @@ func (r *RecordMongo) Close() {
 }
 
 type RecordItem struct {
-	RecordId string    `json:"record_id" bson:"_id"`
-	Front    []Content `json:"front" bson:"front"`
-	Back     []Content `json:"back" bson:"back"`
-	CreateAt time.Time `json:"create_at" bson:"create_at"`
-	Tags     []string  `json:"tags" bson:"tags"`
+	RecordId   *string    `json:"record_id" bson:"_id"`
+	Front      *[]Content `json:"front" bson:"front"`
+	Back       *[]Content `json:"back" bson:"back"`
+	CreateAt   *time.Time `json:"create_at" bson:"create_at"`
+	ReviewDate *time.Time `json:"review_date" bson:"review_date"`
+	Tags       *[]string  `json:"tags" bson:"tags"`
+	Reminder   *int       `json:"reminder", bson:"reminder"`
 }
 
 type Content struct {

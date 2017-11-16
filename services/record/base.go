@@ -36,11 +36,8 @@ func AddHandlerBaseOnCurrentConfig(mux *http.ServeMux, endpoint string) {
 }
 
 func (rs *RecordService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// entering
-	log.Infof("Request to Aggregate CounterHandler, %s", r.URL.Path)
-
 	// Method Examination
-	if !helper.AllowMethod(w, r.Method, "GET", "POST") {
+	if !helper.AllowMethod(w, r.Method, "GET", "POST", "PUT") {
 		log.Printf("Method is not permitted, request method=%s.", r.Method)
 		return
 	}
@@ -48,10 +45,12 @@ func (rs *RecordService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Operation
 	switch r.Method {
 	case "GET":
-		//rs.Query(w, r)
+		rs.Query(&w, r)
 		break
 	case "POST":
 		rs.AddRecord(&w, r)
 		break
+	case "PUT":
+		rs.Update(&w, r)
 	}
 }

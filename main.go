@@ -1,56 +1,43 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/plutoshe/knowledge/api"
 	"github.com/plutoshe/knowledge/helper"
 	"github.com/plutoshe/knowledge/services/record"
+	"github.com/plutoshe/knowledge/services/review"
 	"github.com/plutoshe/knowledge/storage/mongo"
 )
 
 var (
 	fs = flag.NewFlagSet("", flag.ExitOnError)
 
-	hl        = fs.String("http-listen", "0.0.0.0:16759", "HTTP/HTTPs Host and Port to listen on")
-	mongoAddr = fs.String("mongo_address", "127.0.0.1:27017", "Specify the mongo address")
-	mongoDB   = fs.String("mongo_db", "knowledge", "Specify the Mongo database")
-	mongoColl = fs.String("mongo_coll", "chunk", "Specify the Mongo collection")
-	relinkNum = fs.Int("relink", 5, "The number of relink")
+	hl             = fs.String("http-listen", "0.0.0.0:16759", "HTTP/HTTPs Host and Port to listen on")
+	mongoAddr      = fs.String("mongo_address", "127.0.0.1:27017", "Specify the mongo address")
+	mongoDB        = fs.String("mongo_db", "knowledge", "Specify the Mongo database")
+	mongoChunkColl = fs.String("mongo_chunk_coll", "chunk", "Specify the Mongo chunk collection")
+	mongoIndexColl = fs.String("mongo_index_coll", "index", "Specify the Mongo index collection")
+	reviewIndex    = fs.String("review_index", "knowledge_review_index", "Review index in index collection")
+	relinkNum      = fs.Int("relink", 5, "The number of relink")
 )
 
 func main() {
-	// trail
-	a := record.AddtionBody{
-		Content: []record.AddtionContent{record.AddtionContent{
-			Form:  "TEXT",
-			Data:  "123",
-			Cover: 1,
-		},
-			record.AddtionContent{
-				Form:  "TEXT",
-				Data:  "123",
-				Cover: 0,
-			}},
-		Tag:      []string{"1", "2", "3"},
-		Reminder: 1,
-	}
-	w, err1 := json.Marshal(a)
-	log.Print(string(w), err1)
-	// main
 	if err := fs.Parse(os.Args[1:]); err != nil {
 		log.Println(err)
 		os.Exit(1)
 	}
 
-	recordStorage := mongo.NewRecordMongo(*mongoAddr, *mongoDB, *mongoColl, *relinkNum)
+	recordStorage := mongo.NewRecordMongo(*mongoAddr, *mongoDB, *mongoChunkColl, *relinkNum)
+	indexStorage := mongo.NewIndexMongo(*mongoAddr, *mongoDB, *mongoIndexColl, *relinkNum)
 
 	mux := http.NewServeMux()
-	record.AddHandler(mux, "/record", recordStorage)
+	record.AddHandler(mux, api.RecordPrefix, recordStorage)
+	review.AddHandler(mux, api.ReviewPrefix, recordStorage, indexStorage, *reviewIndex)
 
 	handler := helper.RequestLogger(mux)
 	if handler == nil {

@@ -4,36 +4,91 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <link href="css/bootstrap-theme.css" rel="stylesheet" />
+  <script src="js/bootstrap.min.js"></script>
+  <script src="front.js"></script>
+  <!-- <script src="jquery-3.2.1.min.js"></script> -->
+
+  <!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script> -->
+
+
+
 </head>
 <body>
 
 <div class="jumbotron text-center">
   <h1>Input your knowledge chunk</h1>
 </div>
+<!-- <form action="http://127.0.0.1:16759/record" method="post"> -->
+<form id="knowledge">
+  <div class="row col-lg-6">
 
-<div class="row">
-  <div class="col-lg-6">
-    <div class="input-group">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Front <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><a href="#" class="active">Front</a></li>
-          <li><a href="#">Back</a></li>
-          <!-- <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li> -->
-        </ul>
-      </div>
-      <input type="text" class="form-control" aria-label="...">
-      <!-- <input type="text" class="form-control" placeholder="content" aria-describedby="basic-addon1"> -->
-    </div>
+      <select class="form-control col-lg-3" data-style="btn-primary" name="form_0">
+        <option value="front">Front</option>
+        <option value="back">Back</option>
+      </select>
+
+      <input type="text" class="form-control col-lg-3" aria-label="..." name="data_0">
+        <!-- <input type="text" class="form-control" placeholder="content" aria-describedby="basic-addon1"> -->
   </div>
-</div>
-<div class="row">
-</div>
+  <div class="row">
+    <!-- <span class="input-group-btn"> -->
+      <!-- <button class="btn btn-default" type="submit">Submit</button> -->
+      <button class="btn btn-default" onclick="KnowledgeSubmit()"  type="submit">Submit</button>
+      <!-- formenctype="application/x-www-form-urlencoded" ormethod="post" formaction="http://127.0.0.1:16759/record" -->
+    <!-- </span> -->
+  </div>
+</form>
+
+<script>
+  function KnowledgeSubmit() {
+    console.log(1111)
+    var $inputs = $('#knowledge :input');
+
+    // not sure if you wanted this, but I thought I'd add it.
+    // get an associative array of just the values.
+    var values = {};
+    var content_id = 0;
+    $inputs.each(function() {
+        if (this.name.startsWith("form")) {
+          content_id++;
+        }
+        values[this.name] = $(this).val();
+    });
+    // content = new Array(content_id, {});
+    var content = Array(content_id).fill({});
+    for (var k in values) {
+      if (k.startsWith("form")) {
+        content[Number(k.slice(5,))]["form"] = values[k];
+      }
+      if (k.startsWith("data")) {
+        content[Number(k.slice(5,))]["data"] = values[k];
+      }
+    }
+    $.post("http://127.0.0.1:16759/record",
+    {
+        content: content,
+    },
+    function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+
+
+  }
+//   $("#knowledge").submit(function() {
+
+// })
+</script>
+
+
+</body>
+</html>
+
+
+<!--
 <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
@@ -42,22 +97,9 @@
         <ul class="dropdown-menu">
           <li><a href="#">Front</a></li>
           <li><a href="#" class="active">Back</a></li>
-          <!-- <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li> -->
         </ul>
       </div>
       <input type="text" class="form-control" aria-label="...">
-      <!-- <input type="text" class="form-control" placeholder="content" aria-describedby="basic-addon1"> -->
     </div>
   </div>
-</div>
-<div class="input-group input-group-lg">
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button">Submit</button>
-  </span>
-</div>
-
-</body>
-</html>
-
+</div> -->

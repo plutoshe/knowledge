@@ -4,25 +4,21 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/plutoshe/knowledge/helper"
 	"gopkg.in/mgo.v2/bson"
 )
 
-type QueryBody struct {
-	Tags []string `json:"tags"`
-}
-
 func (rs *RecordService) Query(w *http.ResponseWriter, r *http.Request) {
-	req := json.NewDecoder(r.Body)
-	params := QueryBody{}
-	if err := req.Decode(params); err != nil {
-		helper.WriteHTTPError(*w, helper.ErrBadRequestBody)
-		log.Println("Failed to decode cookie pair request, err:", err)
-		return
+	querys := r.URL.Query()
+	tags := []string{}
+	for _, i := range querys["tag"] {
+		tags = append(tags, strings.Split(i, ",")...)
 	}
+
 	queryRule := bson.M{
-		"tags": bson.M{"$in:": params.Tags},
+		"tags": bson.M{"$all": tags},
 	}
 	result, err := rs.RecordStorage.Query(queryRule)
 	if err != nil {

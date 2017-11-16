@@ -19,7 +19,7 @@ type AddtionContent struct {
 
 type AddtionBody struct {
 	Content  []AddtionContent `json:content`
-	Tag      []string         `json:"tag"`
+	Tags     []string         `json:"tags"`
 	Reminder int              `json:"reminder"`
 }
 
@@ -27,6 +27,7 @@ func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
 	// PARAMS
 	decoder := json.NewDecoder(r.Body)
 	params := new(AddtionBody)
+	log.Println(r.Body)
 	if err := decoder.Decode(params); err != nil {
 		helper.WriteHTTPError(*w, helper.ErrBadRequestBody)
 		log.Println("Failed to decode cookie pair request, err:", err)
@@ -49,10 +50,12 @@ func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
 	}
 
 	addRule := bson.M{
-		"front":     front,
-		"back":      back,
-		"create_at": time.Now(),
-		"tags":      params.Tag,
+		"front":       front,
+		"back":        back,
+		"create_at":   time.Now(),
+		"tags":        params.Tags,
+		"review_date": time.Now().Add(time.Duration(params.Reminder) * 24 * time.Hour),
+		"reminder":    params.Reminder,
 	}
 
 	if err := rs.RecordStorage.Add(addRule); err != nil {
