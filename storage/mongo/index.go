@@ -10,9 +10,11 @@ import (
 // Type config
 
 type ReviewIndex struct {
-	IndexName   string    `json:"index_name" bson:"index_name"`
-	ReviewDate  time.Time `json:"review_date" bson:"review_date"`
-	ReviewItems []string  `json:"review_items" bson:"review_items"`
+	IndexName    string    `json:"index_name" bson:"index_name"`
+	CreateDate   time.Time `json:"create_date" bson:"create_date"`
+	ReviewDate   int       `json:"review_date" bson:"review_date"`
+	RememberDate time.Time `json:"remember_date" bson:"remember_date"`
+	ReviewItems  []string  `json:"review_items" bson:"review_items"`
 }
 
 // Mongo config
