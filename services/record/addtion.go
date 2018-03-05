@@ -23,7 +23,7 @@ func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
 	}
 	log.Println(params)
 	log.Println(time.Unix(params.CreateDate, 0))
-	log.Println(time.Unix(params.ReviewDate, 0))
+	log.Println(time.Unix(pwarams.ReviewDate, 0))
 	addRule := bson.M{
 		"front":         params.FrontContent,
 		"back":          params.BackContent,
