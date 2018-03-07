@@ -1,70 +1,35 @@
 package review
 
-// func (rs *ReviewService) Query(w *http.ResponseWriter, r *http.Request) {
-// 	queryRule := bson.M{
-// 		"index_name": rs.ReviewIndex,
-// 	}
-// 	indexResult, err := rs.IndexStorage.ReviewIndexQuery(queryRule)
-// 	if err != nil {
-// 		helper.WriteHTTPError(*w, helper.ErrInternalServer)
-// 		log.Println("Query Index collection failed, err:", err)
-// 		return
-// 	}
-// 	var recordResult []mongo.RecordItem
+import (
+	"encoding/json"
+	"net/http"
+)
 
-// 	currentTime := time.Now()
-// 	if len(r.URL.Query()["now"]) != 0 {
-// 		ticks, err := strconv.ParseInt(r.URL.Query()["now"][0], 10, 64)
+func UnwarpDataFromRquestBody(r *http.Request) (ReviewBody, error) {
+	decoder := json.NewDecoder(r.Body)
+	params := new(ReviewBody)
+	err := decoder.Decode(&params)
+	return params, err
+}
 
-// 		if err != nil {
-// 			helper.WriteHTTPError(*w, helper.ErrMatchBadParameters)
-// 			log.Println("Bad params(name: now), err:", err)
-// 			return
-// 		}
-// 		currentTime = time.Unix(ticks, 0)
-// 	}
+func (rs *ReviewService) RetrieveData(params ReviewBody) []mongo.RecordItem {
+    resultNotReviewed, err := rs.RecordStorage.Query(bson.M{
+        "review_date" : {
+            "$gt": time.Unix(params.ReviewDate, 0),
+        },
+    })
+    resultReviewed, err := rs.RecordStorage.Query(bson.M{
+        "remember_date" : time.Unix(params.ReviewDate, 0),
+    })
+    result = resultNotReviewed.append(resultReviewed...)
+}
 
-// 	if len(indexResult) == 0 || (indexResult[0].ReviewDate.Local().YearDay() != currentTime.YearDay()) {
+func (rs *ReviewService) Query(w *http.ResponseWriter, r *http.Request) {
+	params, err := UnwarpDataFromRquestBody(r)
+    if err := nil {
+        log.Println("Error Msg=%v", err.Error())
+        return
+    }
+    RetrieveData()
 
-// 		limitTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 0, 0, 0, 0, currentTime.Location()).Add(24 * time.Hour)
-// 		recordResult, err = rs.RecordStorage.Query(bson.M{
-// 			"reminder":    bson.M{"$gt": 0},
-// 			"review_date": bson.M{"$lt": limitTime},
-// 		})
-// 		if err != nil {
-// 			helper.WriteHTTPError(*w, helper.ErrInternalServer)
-// 			log.Println("Query record collection failed, err:", err)
-// 			return
-// 		}
-// 		reviewItems := []string{}
-// 		for _, i := range recordResult {
-// 			reviewItems = append(reviewItems, *i.RecordId)
-// 		}
-// 		upsertReviewIndex := bson.M{
-// 			"index_name":   rs.ReviewIndex,
-// 			"review_date":  time.Now(),
-// 			"review_items": reviewItems,
-// 		}
-// 		err = rs.IndexStorage.Upsert(queryRule, upsertReviewIndex)
-// 		if err != nil {
-// 			helper.WriteHTTPError(*w, helper.ErrInternalServer)
-// 			log.Println("update index collection failed, err:", err)
-// 			return
-// 		}
-// 	} else {
-// 		recordResult, err = rs.RecordStorage.Query(bson.M{
-// 			"record_id": bson.M{"$in": indexResult[0].ReviewItems},
-// 		})
-// 		if err != nil {
-// 			helper.WriteHTTPError(*w, helper.ErrInternalServer)
-// 			log.Println("Query record collection failed, err:", err)
-// 			return
-// 		}
-// 	}
-// 	output := json.NewEncoder(*w)
-// 	if err := output.Encode(recordResult); err != nil {
-// 		helper.WriteHTTPError(*w, helper.ErrBadJSONBody)
-// 		log.Println("Encode result failed, err:", err)
-// 		return
-// 	}
-// }
+}

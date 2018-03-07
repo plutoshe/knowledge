@@ -8,19 +8,20 @@ import (
 )
 
 type RecordItem struct {
-	RecordId         *string    `json:"record_id" bson:"_id"`
-	Front            *[]Content `json:"front" bson:"front"`
-	Back             *[]Content `json:"back" bson:"back"`
-	CreateAt         *time.Time `json:"create_at" bson:"create_at"`
-	ReviewDate       *time.Time `json:"review_date" bson:"review_date"`
-	LastRememberDate *time.Time `json:"remember_date" bson:"remember_date"`
-	Tags             *[]string  `json:"tags" bson:"tags"`
-	Reminder         *int       `json:"reminder", bson:"reminder"`
+	RecordId     string    `json:"RecordId" bson:"_id"`
+	Front        []Content `json:"Front" bson:"front"`
+	Back         []Content `json:"Back" bson:"back"`
+	CreateDate   time.Time `json:"CreateDate" bson:"create_date"`
+	ReviewDate   time.Time `json:"review_date" bson:"review_date"`
+	RememberDate time.Time `json:"RememberDate" bson:"remember_date"`
+	Tags         []string  `json:"Tags" bson:"tags"`
+	Reminder     int       `json:"Reminder" bson:"reminder"`
 }
 
 type Content struct {
-	Form string `json:"form" bson:"form"`
-	Data string `json:"data" bson:"data"`
+	Form  string `json:"form" bson:"form"`
+	Data  string `json:"data" bson:"data"`
+	Cover int    `json:"Cover"`
 }
 
 type RecordMongo struct {

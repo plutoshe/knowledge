@@ -18,6 +18,7 @@ type AddtionBody struct {
 	Reminder     int             `json:"Reminder"`
 	ReviewDate   int64           `json:"ReviewDate"`
 	CreateDate   int64           `json:"CreateDate"`
+	RememberDate int64           `json:"RememberDate"`
 }
 
 // review query type

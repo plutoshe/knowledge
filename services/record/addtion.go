@@ -23,14 +23,14 @@ func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
 	}
 	log.Println(params)
 	log.Println(time.Unix(params.CreateDate, 0))
-	log.Println(time.Unix(pwarams.ReviewDate, 0))
+	log.Println(time.Unix(params.ReviewDate, 0))
 	addRule := bson.M{
 		"front":         params.FrontContent,
 		"back":          params.BackContent,
 		"tags":          params.Tags,
-		"create_at":     time.Unix(params.CreateDate, 0),
+		"create_date":   time.Unix(params.CreateDate, 0),
 		"review_date":   time.Unix(params.ReviewDate, 0), // review time based on user timezone, assign this type to client later.
-		"remember_date": time.Unix(params.ReviewDate, 0),
+		"remember_date": time.Unix(params.RememberDate, 0),
 		"reminder":      params.Reminder,
 	}
 
