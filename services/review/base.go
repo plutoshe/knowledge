@@ -9,23 +9,21 @@ import (
 )
 
 type ReviewService struct {
-	IndexStorage  *mongo.IndexMongo
 	RecordStorage *mongo.RecordMongo
 	ReviewIndex   string
 }
 
 var ReviewServiceHandler *ReviewService
 
-func NewReviewService(recordStorage *mongo.RecordMongo, indexStorage *mongo.IndexMongo, reviewIndex string) *ReviewService {
+func NewReviewService(recordStorage *mongo.RecordMongo, reviewIndex string) *ReviewService {
 	return &ReviewService{
 		RecordStorage: recordStorage,
-		IndexStorage:  indexStorage,
 		ReviewIndex:   reviewIndex,
 	}
 }
 
-func AddHandler(mux *http.ServeMux, endpoint string, recordStorage *mongo.RecordMongo, indexStorage *mongo.IndexMongo, reviewIndex string) {
-	ReviewServiceHandler = NewReviewService(recordStorage, indexStorage, reviewIndex)
+func AddHandler(mux *http.ServeMux, endpoint string, recordStorage *mongo.RecordMongo, reviewIndex string) {
+	ReviewServiceHandler = NewReviewService(recordStorage, reviewIndex)
 	mux.Handle(
 		endpoint,
 		ReviewServiceHandler,

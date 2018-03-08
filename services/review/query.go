@@ -2,34 +2,67 @@ package review
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/plutoshe/knowledge/helper"
+	"gopkg.in/mgo.v2/bson"
 )
 
-func UnwarpDataFromRquestBody(r *http.Request) (ReviewBody, error) {
-	decoder := json.NewDecoder(r.Body)
-	params := new(ReviewBody)
-	err := decoder.Decode(&params)
-	return params, err
+func UnwarpDataFromQueryRequestBody(r *http.Request) (ReviewQueryRequestBody, error) {
+	var err error
+	params := ReviewQueryRequestBody{
+		Tags: strings.Split(r.FormValue("Tags"), ","),
+	}
+	params.ReviewDate, err = strconv.ParseInt(r.FormValue("ReviewDate"), 10, 64)
+	if err != nil {
+		return params, err
+	}
+	params.HasTag, err = strconv.Atoi(r.FormValue("HasTag"))
+	return params, nil
 }
 
-func (rs *ReviewService) RetrieveData(params ReviewBody) []mongo.RecordItem {
-    resultNotReviewed, err := rs.RecordStorage.Query(bson.M{
-        "review_date" : {
-            "$gt": time.Unix(params.ReviewDate, 0),
-        },
-    })
-    resultReviewed, err := rs.RecordStorage.Query(bson.M{
-        "remember_date" : time.Unix(params.ReviewDate, 0),
-    })
-    result = resultNotReviewed.append(resultReviewed...)
+func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w *http.ResponseWriter) error {
+	resultUnReviewed, err := rs.RecordStorage.Query(bson.M{
+		"review_date": bson.M{
+			"$gt": time.Unix(params.ReviewDate, 0),
+		},
+	})
+	if err != nil {
+		return err
+	}
+	resultReviewed, err := rs.RecordStorage.Query(bson.M{
+		"remember_date": time.Unix(params.ReviewDate, 0),
+	})
+	if err != nil {
+		return err
+	}
+	result := ReviewQueryResponseBody{
+		UnReviewedRecord: resultUnReviewed,
+		ReviewedRecord:   resultReviewed,
+	}
+	log.Println(result)
+	encode := json.NewEncoder(*w)
+	return encode.Encode(result)
 }
 
 func (rs *ReviewService) Query(w *http.ResponseWriter, r *http.Request) {
-	params, err := UnwarpDataFromRquestBody(r)
-    if err := nil {
-        log.Println("Error Msg=%v", err.Error())
-        return
-    }
-    RetrieveData()
+	log.Println("In Review Query")
 
+	params, err := UnwarpDataFromQueryRequestBody(r)
+	if err != nil {
+		helper.WriteHTTPError(*w, helper.ErrBadRequestBody)
+		log.Println("Error Msg=%v", err.Error())
+		return
+	}
+	log.Println(params)
+	err = rs.RetrieveData(params, w)
+	if err != nil {
+		helper.WriteHTTPError(*w, helper.ErrBadRequestBody)
+		log.Println("Error Msg=%v", err.Error())
+		return
+	}
 }

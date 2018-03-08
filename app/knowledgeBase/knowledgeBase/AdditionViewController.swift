@@ -8,8 +8,6 @@
 
 import Cocoa
 
-//let AdditionPostURL = URL("http://127.0.0.1:16759")
-
 class AdditionViewController: NSViewController {
 
     @IBOutlet weak var FrontContent: NSTextField!
@@ -23,17 +21,17 @@ class AdditionViewController: NSViewController {
     @IBAction func submitRecord(_ sender: Any) {
         let myAlert = NSAlert()
         print(FrontContent.stringValue)
-        let AdditionPostData = AdditionBody(
+        let AdditionPostRequestData = AdditionPostRequestBody(
             FrontContent: [Content(Form:"TEXT", Data:FrontContent.stringValue)],
             BackContent: [Content(Form:"TEXT", Data:BackContent.stringValue)]
         )
         let jsonEncoder = JSONEncoder()
-        let AdditionPostJSON = try? jsonEncoder.encode(AdditionPostData)
-        myAlert.messageText = String(data: try! jsonEncoder.encode(AdditionPostData), encoding: String.Encoding.utf8)!
+        let AdditionPostJSON = try? jsonEncoder.encode(AdditionPostRequestData)
+        myAlert.messageText = String(data: AdditionPostJSON!, encoding: String.Encoding.utf8)!
 
         
-        let url = URL(string: "http://127.0.0.1:16759/record")
-        var request : URLRequest = URLRequest(url: url!)
+        let AdditionPostURL = URL(string: AdditionURL)
+        var request : URLRequest = URLRequest(url: AdditionPostURL!)
         request.httpMethod = "POST"
         
 

@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/plutoshe/knowledge/helper"
-	// "github.com/plutoshe/knowledge/storage/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
 

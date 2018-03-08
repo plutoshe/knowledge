@@ -10,6 +10,7 @@ import (
 	"github.com/plutoshe/knowledge/api"
 	"github.com/plutoshe/knowledge/helper"
 	"github.com/plutoshe/knowledge/services/record"
+	"github.com/plutoshe/knowledge/services/review"
 	"github.com/plutoshe/knowledge/storage/mongo"
 )
 
@@ -36,7 +37,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	record.AddHandler(mux, api.RecordPrefix, recordStorage)
-	// review.AddHandler(mux, api.ReviewPrefix, recordStorage, indexStorage, *reviewIndex)
+	review.AddHandler(mux, api.ReviewPrefix, recordStorage, *reviewIndex)
 
 	handler := helper.RequestLogger(mux)
 	if handler == nil {
