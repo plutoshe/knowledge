@@ -824,6 +824,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="Remember:" target="MzP-db-OKN" id="FN4-rU-NtK"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-pf-m9s">
                                 <rect key="frame" x="186" y="38" width="80" height="32"/>
@@ -832,6 +835,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="Forget:" target="MzP-db-OKN" id="xSK-bq-cGe"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mfo-Dz-8kE">
                                 <rect key="frame" x="307" y="38" width="94" height="32"/>
@@ -840,6 +846,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="CheckResult:" target="MzP-db-OKN" id="Bdd-d9-hyQ"/>
+                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kh9-sE-kuu">
                                 <rect key="frame" x="369" y="246" width="71" height="34"/>
@@ -868,6 +877,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gw6-ZL-6Jr">
+                                <rect key="frame" x="302" y="252" width="67" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="刷新" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6bE-4n-EbN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Refresh:" target="MzP-db-OKN" id="HJ2-Gq-96L"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                 </viewController>

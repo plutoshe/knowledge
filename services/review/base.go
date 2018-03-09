@@ -1,11 +1,10 @@
 package review
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/plutoshe/knowledge/helper"
 	"github.com/plutoshe/knowledge/storage/mongo"
-	"github.com/qiniu/log"
 )
 
 type ReviewService struct {
@@ -40,12 +39,13 @@ func AddHandlerBaseOnCurrentConfig(mux *http.ServeMux, endpoint string) {
 // operation router
 func (rs *ReviewService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Method Examination
-	if !helper.AllowMethod(w, r.Method, "GET") {
-		log.Printf("Method is not permitted, request method=%s.", r.Method)
-		return
-	}
+	// if !helper.AllowMethod(w, r.Method, "GET") {
+	// 	log.Printf("Method is not permitted, request method=%s.", r.Method)
+	// 	return
+	// }
 
 	// Operation
+	log.Println(r.Header)
 	switch r.Method {
 	case "GET":
 		rs.Query(&w, r)

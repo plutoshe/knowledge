@@ -9,8 +9,23 @@
 import Cocoa
 
 class ReviewViewController: NSViewController {
-
+    let defaultSession = URLSession.shared
+    var DataTask: URLSessionDataTask? = nil
     override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do view setup here.
+    }
+    @IBAction func CheckResult(_ sender: Any) {
+    }
+    @IBAction func Remember(_ sender: Any) {
+    }
+    @IBAction func Forget(_ sender: Any) {
+    }
+    
+    @IBAction func Refresh(_ sender: Any) {
+        if let DataTask = DataTask {
+            DataTask.cancel()
+        }
         let ReviewGetRequestData = ReviewGetRequestBody(ReviewDate: Int(Date().timeIntervalSince1970))
         let jsonEncoder = JSONEncoder()
         let ReviewGetRequestJSON = try? jsonEncoder.encode(ReviewGetRequestData)
@@ -24,24 +39,26 @@ class ReviewViewController: NSViewController {
         let ReviewGetURL = urlComponents.url
         var request : URLRequest = URLRequest(url: ReviewGetURL!)
         
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = ReviewGetRequestJSON
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        DataTask = defaultSession.dataTask(with: request)
+        { (data, response, error) in
+            defer { self.DataTask = nil }
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
+
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
-            }
+            print(responseJSON)
+//            let jsonDecoder = JSONDecoder()
+//            if let recordItems = try? jso3nDecoder.decode(ReviewGetResponseBody.self, from: data) {
+//                print(recordItems.ReviewedRecord)
+//            }
         }
-        task.resume()
+        DataTask!.resume()
         
-        super.viewDidLoad()
-        // Do view setup here.
     }
-    
 }

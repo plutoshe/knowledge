@@ -17,6 +17,7 @@ func UnwarpDataFromQueryRequestBody(r *http.Request) (ReviewQueryRequestBody, er
 	params := ReviewQueryRequestBody{
 		Tags: strings.Split(r.FormValue("Tags"), ","),
 	}
+	log.Println(r.FormValue("ReviewDate"))
 	params.ReviewDate, err = strconv.ParseInt(r.FormValue("ReviewDate"), 10, 64)
 	if err != nil {
 		return params, err
@@ -28,7 +29,7 @@ func UnwarpDataFromQueryRequestBody(r *http.Request) (ReviewQueryRequestBody, er
 func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w *http.ResponseWriter) error {
 	resultUnReviewed, err := rs.RecordStorage.Query(bson.M{
 		"review_date": bson.M{
-			"$gt": time.Unix(params.ReviewDate, 0),
+			"$lt": time.Unix(params.ReviewDate, 0),
 		},
 	})
 	if err != nil {
