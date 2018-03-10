@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/plutoshe/knowledge/helper"
 	"gopkg.in/mgo.v2/bson"
@@ -22,6 +21,11 @@ func UnwarpDataFromQueryRequestBody(r *http.Request) (ReviewQueryRequestBody, er
 	if err != nil {
 		return params, err
 	}
+	log.Println(r.FormValue("RememberDate"))
+	params.RememberDate, err = strconv.ParseInt(r.FormValue("RememberDate"), 10, 64)
+	if err != nil {
+		return params, err
+	}
 	params.HasTag, err = strconv.Atoi(r.FormValue("HasTag"))
 	return params, nil
 }
@@ -29,14 +33,14 @@ func UnwarpDataFromQueryRequestBody(r *http.Request) (ReviewQueryRequestBody, er
 func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w *http.ResponseWriter) error {
 	resultUnReviewed, err := rs.RecordStorage.Query(bson.M{
 		"review_date": bson.M{
-			"$lt": time.Unix(params.ReviewDate, 0),
+			"$lt": params.ReviewDate,
 		},
 	})
 	if err != nil {
 		return err
 	}
 	resultReviewed, err := rs.RecordStorage.Query(bson.M{
-		"remember_date": time.Unix(params.ReviewDate, 0),
+		"remember_date": params.RememberDate,
 	})
 	if err != nil {
 		return err

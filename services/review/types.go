@@ -3,9 +3,10 @@ package review
 import "github.com/plutoshe/knowledge/storage/mongo"
 
 type ReviewQueryRequestBody struct {
-	ReviewDate int64    `json:"ReviewDate"`
-	HasTag     int      `json:"HasTag"`
-	Tags       []string `json:"Tags"`
+	ReviewDate   int64    `json:"ReviewDate"`
+	RememberDate int64    `json:"RememberDate"`
+	HasTag       int      `json:"HasTag"`
+	Tags         []string `json:"Tags"`
 }
 
 type ReviewQueryResponseBody struct {

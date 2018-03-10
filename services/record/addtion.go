@@ -32,7 +32,7 @@ func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
 		"remember_date": params.RememberDate,
 		"reminder":      params.Reminder,
 	}
-
+	log.Println(addRule)
 	if err := rs.RecordStorage.Add(addRule); err != nil {
 		helper.WriteHTTPError(*w, helper.ErrInternalServer)
 		log.Println("Insert record failed, err:", err)

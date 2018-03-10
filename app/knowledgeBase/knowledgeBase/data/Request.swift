@@ -11,6 +11,16 @@ import Foundation
 let AdditionURL = "http://127.0.0.1:16759/record"
 let ReviewURL = "http://127.0.0.1:16759/review"
 
+func TrimToLocalDay(fromDate: Date) -> Int {
+    let gregorian = Calendar(identifier: .gregorian)
+    var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: fromDate)
+    // Change the time to 9:30:00 in your locale
+    components.hour = 0
+    components.minute = 0
+    components.second = 0
+    return Int(gregorian.date(from: components)!.timeIntervalSince1970)
+}
+
 class AdditionPostRequestBody: Codable {
     var FrontContent : [Content] = []
     var BackContent: [Content] = []
@@ -23,16 +33,9 @@ class AdditionPostRequestBody: Codable {
     init(FrontContent: [Content], BackContent: [Content]) {
         self.FrontContent = FrontContent
         self.BackContent = BackContent
-        let createDate = Date()
-        self.CreateDate = Int(createDate.timeIntervalSince1970)
-        let gregorian = Calendar(identifier: .gregorian)
-        var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: createDate)
-        // Change the time to 9:30:00 in your locale
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        self.RememberDate = Int(gregorian.date(from: components)!.timeIntervalSince1970)
-        self.ReviewDate = Int(Calendar.current.date(byAdding: .day, value: 1, to: gregorian.date(from: components)!)!.timeIntervalSince1970)
+        self.CreateDate = Int(Date().timeIntervalSince1970)
+        self.RememberDate = TrimToLocalDay(fromDate: Date(timeIntervalSince1970: TimeInterval(self.CreateDate)))
+        self.ReviewDate = Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.RememberDate)))!.timeIntervalSince1970)
     }
 }
 
@@ -40,9 +43,11 @@ class ReviewGetRequestBody: Codable {
     var HasTag : Int = 0
     var Tags : [String] = []
     var ReviewDate : Int = 0
+    var RememberDate : Int = 0
     init() {}
     init (ReviewDate: Int) {
         self.ReviewDate = ReviewDate
+        self.RememberDate = TrimToLocalDay(fromDate: Date(timeIntervalSince1970: TimeInterval(self.ReviewDate)))
         self.HasTag = 0
     }
 }

@@ -23,8 +23,27 @@ class RecordItem: Codable {
     var Back: [Content] = []
     var CreateDate: Int64 = 0
     var ReviewDate: Int64 = 0
-    var RemeberDate: Int64 = 0
+    var RememberDate: Int64 = 0
     var Tags: [String] = []
     var Reminder: Int = 0
+}
+enum DisplayModeStatus: Int{
+    case ReviewedRecord = 0, UnReviewedRecord
+}
+class DisplayRecord {
+    var RecordItems = [DisplayModeStatus: [RecordItem]]()
+    func GetCurrentStatusRecord(display:DisplayRecordStatus) -> RecordItem {
+        return self.RecordItems[display.mode]![display.displayItem]
+    }
+    init(rs: ReviewGetResponseBody) {
+        self.RecordItems[DisplayModeStatus.ReviewedRecord] = rs.ReviewedRecord
+        self.RecordItems[DisplayModeStatus.UnReviewedRecord] = rs.UnReviewedRecord
+    }
+}
+
+class DisplayRecordStatus {
+    var mode: DisplayModeStatus = .ReviewedRecord
+    var displayItem: Int = 0
+    init() {}
 }
 
