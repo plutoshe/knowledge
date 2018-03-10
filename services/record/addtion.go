@@ -27,9 +27,9 @@ func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
 		"front":         params.FrontContent,
 		"back":          params.BackContent,
 		"tags":          params.Tags,
-		"create_date":   time.Unix(params.CreateDate, 0),
-		"review_date":   time.Unix(params.ReviewDate, 0), // review time based on user timezone, assign this type to client later.
-		"remember_date": time.Unix(params.RememberDate, 0),
+		"create_date":   params.CreateDate,
+		"review_date":   params.ReviewDate, // review time based on user timezone, assign this type to client later.
+		"remember_date": params.RememberDate,
 		"reminder":      params.Reminder,
 	}
 

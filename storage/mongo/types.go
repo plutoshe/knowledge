@@ -1,25 +1,24 @@
 package mongo
 
 import (
-	"time"
-
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type RecordItem struct {
-	RecordId     string    `json:"RecordId" bson:"_id"`
-	Front        []Content `json:"Front" bson:"front"`
-	Back         []Content `json:"Back" bson:"back"`
-	CreateDate   time.Time `json:"CreateDate" bson:"create_date"`
-	ReviewDate   time.Time `json:"review_date" bson:"review_date"`
-	RememberDate time.Time `json:"RememberDate" bson:"remember_date"`
-	Tags         []string  `json:"Tags" bson:"tags"`
-	Reminder     int       `json:"Reminder" bson:"reminder"`
+	RecordID     bson.ObjectId `json:"RecordID" bson:"_id"`
+	Front        []Content     `json:"Front" bson:"front"`
+	Back         []Content     `json:"Back" bson:"back"`
+	CreateDate   int64         `json:"CreateDate" bson:"create_date"`
+	ReviewDate   int64         `json:"ReviewDate" bson:"review_date"`
+	RememberDate int64         `json:"RememberDate" bson:"remember_date"`
+	Tags         []string      `json:"Tags" bson:"tags"`
+	Reminder     int           `json:"Reminder" bson:"reminder"`
 }
 
 type Content struct {
-	Form  string `json:"form" bson:"form"`
-	Data  string `json:"data" bson:"data"`
+	Form  string `json:"Form" bson:"form"`
+	Data  string `json:"Data" bson:"data"`
 	Cover int    `json:"Cover"`
 }
 

@@ -21,9 +21,9 @@ class RecordItem: Codable {
     var RecordID: String = ""
     var Front: [Content] = []
     var Back: [Content] = []
-    var CreateDate: Date = Date()
-    var ReviewDate: Date = Date()
-    var RemeberDate: Date = Date()
+    var CreateDate: Int64 = 0
+    var ReviewDate: Int64 = 0
+    var RemeberDate: Int64 = 0
     var Tags: [String] = []
     var Reminder: Int = 0
 }

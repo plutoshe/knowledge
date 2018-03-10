@@ -50,13 +50,18 @@ class ReviewViewController: NSViewController {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
-
+            print(String(data: data, encoding: String.Encoding.utf8)!)
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            print(responseJSON)
-//            let jsonDecoder = JSONDecoder()
-//            if let recordItems = try? jso3nDecoder.decode(ReviewGetResponseBody.self, from: data) {
-//                print(recordItems.ReviewedRecord)
-//            }
+            let jsonDecoder = JSONDecoder()
+            print("!!!!")
+            
+//            do {
+            if let recordItems = try? jsonDecoder.decode(ReviewGetResponseBody.self, from: data) {
+                    
+                print(recordItems)
+//            } catch {
+//                print(error)
+            }
         }
         DataTask!.resume()
         

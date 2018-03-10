@@ -45,6 +45,11 @@ func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w *http.Res
 		UnReviewedRecord: resultUnReviewed,
 		ReviewedRecord:   resultReviewed,
 	}
+
+	resultJSON, err := json.Marshal(result)
+	if err == nil {
+		log.Println(string(resultJSON))
+	}
 	log.Println(result)
 	encode := json.NewEncoder(*w)
 	return encode.Encode(result)
