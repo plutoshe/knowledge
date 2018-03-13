@@ -761,7 +761,7 @@
                 <tabViewController selectedTabViewItemIndex="1" id="CtN-I8-ega" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem id="xYw-Or-KB8"/>
-                        <tabViewItem id="hqc-N9-pXo"/>
+                        <tabViewItem id="XML-xN-3I2"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="o2q-XI-juF">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
@@ -775,21 +775,75 @@
                     <connections>
                         <outlet property="tabView" destination="o2q-XI-juF" id="qCB-SQ-vIo"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="tabItems" id="Y0q-Uu-uuo"/>
-                        <segue destination="MzP-db-OKN" kind="relationship" relationship="tabItems" id="s7o-6v-Fbp"/>
+                        <segue destination="gFg-TV-lbi" kind="relationship" relationship="tabItems" id="WYp-Wr-WIY"/>
                     </connections>
                 </tabViewController>
                 <customObject id="WwL-nU-lwL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="241" y="95"/>
         </scene>
-        <!--Review View Controller-->
-        <scene sceneID="5fx-f7-fO2">
+        <!--Review Main View Controller-->
+        <scene sceneID="ilD-2j-NY9">
             <objects>
-                <viewController id="MzP-db-OKN" customClass="ReviewViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="6TP-xY-fgT">
+                <viewController id="gFg-TV-lbi" customClass="ReviewMainViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="1BV-fo-ag4">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <containerView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
+                                <rect key="frame" x="20" y="12" width="389" height="268"/>
+                            </containerView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
+                                <rect key="frame" x="361" y="266" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pZ7-da-MsP">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="TollPage:" target="gFg-TV-lbi" id="zUv-A9-FCO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="width" secondItem="1BV-fo-ag4" secondAttribute="width" id="F50-F1-o7f"/>
+                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="height" secondItem="1BV-fo-ag4" secondAttribute="height" id="Fdy-c1-jZy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="uXW-yZ-jxq" id="1hd-O4-3un"/>
+                    </connections>
+                </viewController>
+                <customObject id="gj8-GZ-s9r" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="291" y="585"/>
+        </scene>
+        <!--Review Front View Controller-->
+        <scene sceneID="5fx-f7-fO2">
+            <objects>
+                <viewController storyboardIdentifier="ReviewFrontViewController" id="MzP-db-OKN" customClass="ReviewFrontViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="ReviewFrontPage" id="6TP-xY-fgT">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DnF-3K-k0y">
+                                <rect key="frame" x="59" y="271" width="56" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="已复习:0" id="Noy-fg-zSu">
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QWg-CS-57k">
+                                <rect key="frame" x="59" y="252" width="56" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="未掌握:0" id="otr-lN-EeE">
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ng7-3w-y5M">
                                 <rect key="frame" x="127" y="126" width="197" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -799,17 +853,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNO-UT-nzt">
-                                <rect key="frame" x="55" y="38" width="67" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gau-n3-iE2">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="Remember:" target="MzP-db-OKN" id="FN4-rU-NtK"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-pf-m9s">
                                 <rect key="frame" x="186" y="38" width="80" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -829,7 +872,7 @@
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="CheckResult:" target="MzP-db-OKN" id="Bdd-d9-hyQ"/>
+                                    <action selector="CheckResult:" target="MzP-db-OKN" id="Hs3-7D-Wqa"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kh9-sE-kuu">
@@ -852,24 +895,17 @@
                                     <action selector="Refresh:" target="MzP-db-OKN" id="HJ2-Gq-96L"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DnF-3K-k0y">
-                                <rect key="frame" x="59" y="271" width="56" height="17"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNO-UT-nzt">
+                                <rect key="frame" x="67" y="38" width="67" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="已复习:0" id="Noy-fg-zSu">
+                                <buttonCell key="cell" type="push" title="记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gau-n3-iE2">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QWg-CS-57k">
-                                <rect key="frame" x="59" y="252" width="56" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="未掌握:0" id="otr-lN-EeE">
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Remember:" target="MzP-db-OKN" id="PGi-3M-ZAV"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -881,13 +917,13 @@
                 </viewController>
                 <customObject id="EOn-M6-fig" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="894" y="585"/>
+            <point key="canvasLocation" x="921" y="505"/>
         </scene>
-        <!--View Controller-->
+        <!--Review Back View Controller-->
         <scene sceneID="bJU-RR-FaM">
             <objects>
-                <viewController id="aaO-rA-66A" sceneMemberID="viewController">
-                    <view key="view" id="1gO-vq-PA8">
+                <viewController storyboardIdentifier="ReviewBackViewController" id="aaO-rA-66A" customClass="ReviewBackViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" identifier="ReviewBackPage" id="1gO-vq-PA8">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -929,7 +965,7 @@
                 </viewController>
                 <customObject id="kmT-CC-Z7c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1409" y="585"/>
+            <point key="canvasLocation" x="936" y="880"/>
         </scene>
     </scenes>
 </document>

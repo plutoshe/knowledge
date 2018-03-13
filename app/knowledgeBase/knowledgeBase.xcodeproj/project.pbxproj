@@ -11,8 +11,10 @@
 		9222C7B4203FDC3D00FE8050 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9222C7B3203FDC3D00FE8050 /* Assets.xcassets */; };
 		9222C7B7203FDC3D00FE8050 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9222C7B5203FDC3D00FE8050 /* Main.storyboard */; };
 		9222C7C2203FE45300FE8050 /* AdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9222C7C1203FE45300FE8050 /* AdditionViewController.swift */; };
+		925A0C3B2057B42E002CC810 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C392057B42E002CC810 /* ReviewMainViewController.swift */; };
+		925A0C3E2057BAA3002CC810 /* ReviewBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */; };
 		92B3CF4420405302005DF137 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3CF4320405302005DF137 /* Record.swift */; };
-		92BA1A7F20511A27003AAFF9 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BA1A7E20511A27003AAFF9 /* ReviewViewController.swift */; };
+		92BA1A7F20511A27003AAFF9 /* ReviewFrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BA1A7E20511A27003AAFF9 /* ReviewFrontViewController.swift */; };
 		92BA1A8120511AD1003AAFF9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BA1A8020511AD1003AAFF9 /* Request.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,8 +26,10 @@
 		9222C7B8203FDC3D00FE8050 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9222C7B9203FDC3D00FE8050 /* knowledgeBase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = knowledgeBase.entitlements; sourceTree = "<group>"; };
 		9222C7C1203FE45300FE8050 /* AdditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionViewController.swift; sourceTree = "<group>"; };
+		925A0C392057B42E002CC810 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainViewController.swift; sourceTree = "<group>"; };
+		925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewBackViewController.swift; sourceTree = "<group>"; };
 		92B3CF4320405302005DF137 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
-		92BA1A7E20511A27003AAFF9 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		92BA1A7E20511A27003AAFF9 /* ReviewFrontViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFrontViewController.swift; sourceTree = "<group>"; };
 		92BA1A8020511AD1003AAFF9 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,9 +66,11 @@
 				92B3CF452040530C005DF137 /* data */,
 				9222C7AF203FDC3D00FE8050 /* AppDelegate.swift */,
 				9222C7C1203FE45300FE8050 /* AdditionViewController.swift */,
-				92BA1A7E20511A27003AAFF9 /* ReviewViewController.swift */,
+				92BA1A7E20511A27003AAFF9 /* ReviewFrontViewController.swift */,
 				9222C7B3203FDC3D00FE8050 /* Assets.xcassets */,
 				9222C7B5203FDC3D00FE8050 /* Main.storyboard */,
+				925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */,
+				925A0C392057B42E002CC810 /* ReviewMainViewController.swift */,
 				9222C7B8203FDC3D00FE8050 /* Info.plist */,
 				9222C7B9203FDC3D00FE8050 /* knowledgeBase.entitlements */,
 			);
@@ -153,8 +159,10 @@
 			files = (
 				9222C7B0203FDC3D00FE8050 /* AppDelegate.swift in Sources */,
 				92B3CF4420405302005DF137 /* Record.swift in Sources */,
-				92BA1A7F20511A27003AAFF9 /* ReviewViewController.swift in Sources */,
+				92BA1A7F20511A27003AAFF9 /* ReviewFrontViewController.swift in Sources */,
+				925A0C3B2057B42E002CC810 /* ReviewMainViewController.swift in Sources */,
 				92BA1A8120511AD1003AAFF9 /* Request.swift in Sources */,
+				925A0C3E2057BAA3002CC810 /* ReviewBackViewController.swift in Sources */,
 				9222C7C2203FE45300FE8050 /* AdditionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

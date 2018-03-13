@@ -8,31 +8,31 @@
 
 import Cocoa
 
-class ReviewViewController: NSViewController {
+class ReviewFrontViewController: NSViewController {
     let defaultSession = URLSession.shared
-    
+
     @IBOutlet weak var ReviewedNumberDisplayText: NSTextField!
     @IBOutlet weak var UnReviewedNumberDisplayText: NSTextField!
     @IBOutlet weak var RecordFrontContent: NSTextField!
-    
+
     var Records: DisplayRecord? = nil
     var Status: DisplayRecordStatus = DisplayRecordStatus()
     var DataTask: URLSessionDataTask? = nil
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        refresh()
         // Do view setup here.
     }
-    
+
     func reselectDisplayItem() {
-        
+
         if let number = self.Records?.RecordItems[self.Status.mode]?.count {
                 self.Status.displayItem = Int(arc4random_uniform(UInt32(number)))
             } else {
                 self.Status.displayItem = -1
             }
-        
+
     }
     
     func refreshDisplayText() {
@@ -44,7 +44,7 @@ class ReviewViewController: NSViewController {
             self.RecordFrontContent.stringValue = ""
         }
     }
-    
+
     func refresh() {
         if let DataTask = DataTask {
             DataTask.cancel()
@@ -62,11 +62,11 @@ class ReviewViewController: NSViewController {
         ]
         let ReviewGetURL = urlComponents.url
         var request : URLRequest = URLRequest(url: ReviewGetURL!)
-        
+
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = ReviewGetRequestJSON
-        
+
         DataTask = defaultSession.dataTask(with: request)
         { (data, response, error) in
             defer { self.DataTask = nil }
@@ -90,15 +90,25 @@ class ReviewViewController: NSViewController {
         }
         DataTask!.resume()
     }
-    
+
     @IBAction func CheckResult(_ sender: Any) {
+        //prepare(for: "ReviewToBack", sender: _)
     }
+
     @IBAction func Remember(_ sender: Any) {
+        // review->old_review+(old_review-old_remember)*2
+        // remember->old_review
+
+        performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "ReviewToBack"), sender: self)
     }
     @IBAction func Forget(_ sender: Any) {
+        // review->today+1day
+        // remember->today
+        //prepare(for: "ReviewToBack", sender: _)
     }
-    
+
     @IBAction func Refresh(_ sender: Any) {
         refresh()
     }
+    
 }
