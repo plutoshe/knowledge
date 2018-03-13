@@ -10,7 +10,7 @@ import Cocoa
 
 class ReviewFrontViewController: NSViewController {
     let defaultSession = URLSession.shared
-
+    var delegate: ReviewFrontOperationDelegate?
     @IBOutlet weak var ReviewedNumberDisplayText: NSTextField!
     @IBOutlet weak var UnReviewedNumberDisplayText: NSTextField!
     @IBOutlet weak var RecordFrontContent: NSTextField!
@@ -95,12 +95,10 @@ class ReviewFrontViewController: NSViewController {
         //prepare(for: "ReviewToBack", sender: _)
     }
 
-    @IBAction func Remember(_ sender: Any) {
-        // review->old_review+(old_review-old_remember)*2
-        // remember->old_review
-
-        performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "ReviewToBack"), sender: self)
+    @IBAction func Remember(_ sender: NSButton) {
+        self.delegate!.Remember(sender: sender)
     }
+    
     @IBAction func Forget(_ sender: Any) {
         // review->today+1day
         // remember->today

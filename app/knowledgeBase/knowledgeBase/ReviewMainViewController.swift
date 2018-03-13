@@ -8,7 +8,12 @@
 
 import Cocoa
 
-class ReviewMainViewController: NSViewController {
+class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate {
+    
+    func Remember(sender: NSButton) {
+       updateView()
+    }
+    
 
 
     
@@ -20,7 +25,7 @@ class ReviewMainViewController: NSViewController {
     }
     
     func setupView() {
-        self.selectedPageIndex = 0
+        self.selectedPageIndex = 1
         updateView()
     }
     
@@ -30,10 +35,10 @@ class ReviewMainViewController: NSViewController {
         // Instantiate View Controller
         var gg = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "ReviewFrontViewController"))
         var viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "ReviewFrontViewController")) as! ReviewFrontViewController
-
+        
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
-
+        viewController.delegate = self
 //        self.view.addSubview(viewController.view)
 
         return viewController
@@ -55,10 +60,11 @@ class ReviewMainViewController: NSViewController {
     private func remove(asChildViewController viewController: NSViewController) {
         // Notify Child View Controller
 //        viewController.willMove(toParentViewController: nil)
+//        self.view.isHidden = true
+        
         self.view.willRemoveSubview(viewController.view)
         // Remove Child View From Superview
         viewController.view.removeFromSuperview()
-        
         // Notify Child View Controller
         viewController.removeFromParentViewController()
     }
@@ -79,6 +85,7 @@ class ReviewMainViewController: NSViewController {
     }
     
     func updateView() {
+        selectedPageIndex = 1 - selectedPageIndex
         if self.selectedPageIndex == 1 {
             remove(asChildViewController: reviewFrontViewController)
             add(asChildViewController: reviewBackViewController)
@@ -89,7 +96,6 @@ class ReviewMainViewController: NSViewController {
     }
     
     @IBAction func TollPage(_ sender: NSButton) {
-        selectedPageIndex = 1 - selectedPageIndex
         updateView()
     }
 }
