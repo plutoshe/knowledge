@@ -9,10 +9,22 @@
 import Cocoa
 
 class ReviewBackViewController: NSViewController {
-
+    var delegate: ReviewBackOperationDelegate? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
     
+    @IBOutlet weak var RecordContent: NSTextField!
+    @IBAction func Omit(_ sender: NSButton) {
+        self.delegate?.Omit(sender: sender)
+    }
+    
+    @IBAction func Forgot(_ sender: NSButton) {
+        self.delegate?.Forgot(sender: sender)
+    }
+    
+    @IBAction func Remember(_ sender: NSButton) {
+        self.delegate?.Remember(sender: sender)
+    }
 }

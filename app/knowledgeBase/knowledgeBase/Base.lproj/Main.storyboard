@@ -790,12 +790,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <containerView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
-                                <rect key="frame" x="20" y="12" width="389" height="268"/>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
+                                <rect key="frame" x="20" y="-20" width="450" height="300"/>
                             </containerView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
-                                <rect key="frame" x="334" y="33" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
+                                <rect key="frame" x="27" y="59" width="81" height="32"/>
                                 <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pZ7-da-MsP">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -806,8 +805,13 @@
                             </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="DET-UH-9yc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1BV-fo-ag4" secondAttribute="leading" constant="20" symbolic="YES" id="5lJ-l8-gK3"/>
                             <constraint firstItem="uXW-yZ-jxq" firstAttribute="width" secondItem="1BV-fo-ag4" secondAttribute="width" id="F50-F1-o7f"/>
                             <constraint firstItem="uXW-yZ-jxq" firstAttribute="height" secondItem="1BV-fo-ag4" secondAttribute="height" id="Fdy-c1-jZy"/>
+                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="trailing" secondItem="DET-UH-9yc" secondAttribute="trailing" id="RlF-Qc-Xae"/>
+                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="leading" secondItem="1BV-fo-ag4" secondAttribute="leading" constant="20" symbolic="YES" id="U2c-D4-0mN"/>
+                            <constraint firstAttribute="bottom" secondItem="DET-UH-9yc" secondAttribute="bottom" constant="40" id="if1-w0-YI8"/>
+                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="top" secondItem="1BV-fo-ag4" secondAttribute="top" constant="20" symbolic="YES" id="zjo-Y8-zV6"/>
                         </constraints>
                     </view>
                     <connections>
@@ -943,6 +947,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="Remember:" target="aaO-rA-66A" id="wVH-7f-0At"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-hp-rDX">
                                 <rect key="frame" x="183" y="21" width="80" height="32"/>
@@ -951,6 +958,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="Forgot:" target="aaO-rA-66A" id="kAs-2W-RIo"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkm-p0-zod">
                                 <rect key="frame" x="305" y="21" width="94" height="32"/>
@@ -959,9 +969,15 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="Omit:" target="aaO-rA-66A" id="fRM-bj-Bfg"/>
+                                </connections>
                             </button>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="RecordContent" destination="ZZP-rb-RDo" id="qSg-9E-HEC"/>
+                    </connections>
                 </viewController>
                 <customObject id="kmT-CC-Z7c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

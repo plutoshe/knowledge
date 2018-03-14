@@ -13,7 +13,7 @@
 		9222C7C2203FE45300FE8050 /* AdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9222C7C1203FE45300FE8050 /* AdditionViewController.swift */; };
 		925A0C3B2057B42E002CC810 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C392057B42E002CC810 /* ReviewMainViewController.swift */; };
 		925A0C3E2057BAA3002CC810 /* ReviewBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */; };
-		925A0C4020581CF8002CC810 /* ReviewFrontDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C3F20581CF8002CC810 /* ReviewFrontDelegate.swift */; };
+		925A0C4020581CF8002CC810 /* ReviewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C3F20581CF8002CC810 /* ReviewDelegate.swift */; };
 		92B3CF4420405302005DF137 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3CF4320405302005DF137 /* Record.swift */; };
 		92BA1A7F20511A27003AAFF9 /* ReviewFrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BA1A7E20511A27003AAFF9 /* ReviewFrontViewController.swift */; };
 		92BA1A8120511AD1003AAFF9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BA1A8020511AD1003AAFF9 /* Request.swift */; };
@@ -29,7 +29,7 @@
 		9222C7C1203FE45300FE8050 /* AdditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionViewController.swift; sourceTree = "<group>"; };
 		925A0C392057B42E002CC810 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainViewController.swift; sourceTree = "<group>"; };
 		925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewBackViewController.swift; sourceTree = "<group>"; };
-		925A0C3F20581CF8002CC810 /* ReviewFrontDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFrontDelegate.swift; sourceTree = "<group>"; };
+		925A0C3F20581CF8002CC810 /* ReviewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDelegate.swift; sourceTree = "<group>"; };
 		92B3CF4320405302005DF137 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		92BA1A7E20511A27003AAFF9 /* ReviewFrontViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFrontViewController.swift; sourceTree = "<group>"; };
 		92BA1A8020511AD1003AAFF9 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 			children = (
 				92B3CF4320405302005DF137 /* Record.swift */,
 				92BA1A8020511AD1003AAFF9 /* Request.swift */,
-				925A0C3F20581CF8002CC810 /* ReviewFrontDelegate.swift */,
+				925A0C3F20581CF8002CC810 /* ReviewDelegate.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 			files = (
 				9222C7B0203FDC3D00FE8050 /* AppDelegate.swift in Sources */,
 				92B3CF4420405302005DF137 /* Record.swift in Sources */,
-				925A0C4020581CF8002CC810 /* ReviewFrontDelegate.swift in Sources */,
+				925A0C4020581CF8002CC810 /* ReviewDelegate.swift in Sources */,
 				92BA1A7F20511A27003AAFF9 /* ReviewFrontViewController.swift in Sources */,
 				925A0C3B2057B42E002CC810 /* ReviewMainViewController.swift in Sources */,
 				92BA1A8120511AD1003AAFF9 /* Request.swift in Sources */,

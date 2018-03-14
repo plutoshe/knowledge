@@ -42,8 +42,16 @@ class DisplayRecord {
 }
 
 class DisplayRecordStatus {
-    var mode: DisplayModeStatus = .ReviewedRecord
-    var displayItem: Int = 0
+    var mode: DisplayModeStatus = .UnReviewedRecord
+    var displayItem: Int = -1
     init() {}
+    func ToggleMode() {
+        switch mode {
+            case .ReviewedRecord:
+            mode = .UnReviewedRecord
+            case .UnReviewedRecord:
+            mode = .ReviewedRecord
+        }
+    }
 }
 
