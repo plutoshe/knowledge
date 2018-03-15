@@ -11,7 +11,7 @@ import Cocoa
 protocol ReviewFrontOperationDelegate {
     func Remember(sender: NSButton)
     
-    func Forgot(sender: NSButton)
+    func Forget(sender: NSButton)
     
     func CheckResult(sender: NSButton)
 }
@@ -19,7 +19,7 @@ protocol ReviewFrontOperationDelegate {
 protocol ReviewBackOperationDelegate {
     func Remember(sender: NSButton)
     
-    func Forgot(sender: NSButton)
+    func Forget(sender: NSButton)
     
     func Omit(sender: NSButton)
     

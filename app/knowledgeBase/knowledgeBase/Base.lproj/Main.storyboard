@@ -787,40 +787,54 @@
             <objects>
                 <viewController id="gFg-TV-lbi" customClass="ReviewMainViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="1BV-fo-ag4">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="477" height="346"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
-                                <rect key="frame" x="20" y="-20" width="450" height="300"/>
+                            <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
+                                <rect key="frame" x="28" y="66" width="421" height="260"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </containerView>
-                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
-                                <rect key="frame" x="27" y="59" width="81" height="32"/>
-                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pZ7-da-MsP">
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
+                                <rect key="frame" x="361" y="307" width="111" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="转变复习模式" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pZ7-da-MsP">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="TollPage:" target="gFg-TV-lbi" id="zUv-A9-FCO"/>
+                                    <action selector="ChangeReviewMode:" target="gFg-TV-lbi" id="2qk-pk-bT6"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gw6-ZL-6Jr">
+                                <rect key="frame" x="361" y="274" width="94" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="刷新数据" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6bE-4n-EbN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Refresh:" target="MzP-db-OKN" id="HJ2-Gq-96L"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJg-hz-CND">
+                                <rect key="frame" x="263" y="295" width="77" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="复习模式： " id="wLV-19-YTZ">
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="DET-UH-9yc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1BV-fo-ag4" secondAttribute="leading" constant="20" symbolic="YES" id="5lJ-l8-gK3"/>
-                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="width" secondItem="1BV-fo-ag4" secondAttribute="width" id="F50-F1-o7f"/>
-                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="height" secondItem="1BV-fo-ag4" secondAttribute="height" id="Fdy-c1-jZy"/>
-                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="trailing" secondItem="DET-UH-9yc" secondAttribute="trailing" id="RlF-Qc-Xae"/>
-                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="leading" secondItem="1BV-fo-ag4" secondAttribute="leading" constant="20" symbolic="YES" id="U2c-D4-0mN"/>
-                            <constraint firstAttribute="bottom" secondItem="DET-UH-9yc" secondAttribute="bottom" constant="40" id="if1-w0-YI8"/>
-                            <constraint firstItem="uXW-yZ-jxq" firstAttribute="top" secondItem="1BV-fo-ag4" secondAttribute="top" constant="20" symbolic="YES" id="zjo-Y8-zV6"/>
-                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="ReviewModeText" destination="rJg-hz-CND" id="zPp-Ex-eRn"/>
                         <outlet property="contentView" destination="uXW-yZ-jxq" id="1hd-O4-3un"/>
                     </connections>
                 </viewController>
                 <customObject id="gj8-GZ-s9r" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="513" y="562"/>
+            <point key="canvasLocation" x="526.5" y="585"/>
         </scene>
         <!--Review Front View Controller-->
         <scene sceneID="5fx-f7-fO2">
@@ -848,15 +862,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ng7-3w-y5M">
-                                <rect key="frame" x="127" y="126" width="197" height="91"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="gZw-Sy-8dc">
-                                    <font key="font" metaFont="system" size="23"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-pf-m9s">
                                 <rect key="frame" x="186" y="38" width="80" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -879,26 +884,6 @@
                                     <action selector="CheckResult:" target="MzP-db-OKN" id="Hs3-7D-Wqa"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kh9-sE-kuu">
-                                <rect key="frame" x="369" y="246" width="71" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="复习模式： 重新复习" id="Yaz-Hb-0v2">
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gw6-ZL-6Jr">
-                                <rect key="frame" x="302" y="252" width="67" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="刷新" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6bE-4n-EbN">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="Refresh:" target="MzP-db-OKN" id="HJ2-Gq-96L"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNO-UT-nzt">
                                 <rect key="frame" x="67" y="38" width="67" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -910,6 +895,15 @@
                                     <action selector="Remember:" target="MzP-db-OKN" id="jvr-jB-coh"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ng7-3w-y5M">
+                                <rect key="frame" x="59" y="88" width="355" height="146"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="gZw-Sy-8dc">
+                                    <font key="font" metaFont="system" size="23"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -959,7 +953,7 @@
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="Forgot:" target="aaO-rA-66A" id="kAs-2W-RIo"/>
+                                    <action selector="Forget:" target="aaO-rA-66A" id="asv-lF-HAu"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkm-p0-zod">

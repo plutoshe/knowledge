@@ -20,8 +20,8 @@ class ReviewBackViewController: NSViewController {
         self.delegate?.Omit(sender: sender)
     }
     
-    @IBAction func Forgot(_ sender: NSButton) {
-        self.delegate?.Forgot(sender: sender)
+    @IBAction func Forget(_ sender: NSButton) {
+        self.delegate?.Forget(sender: sender)
     }
     
     @IBAction func Remember(_ sender: NSButton) {

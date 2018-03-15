@@ -45,7 +45,7 @@ class ReviewGetRequestBody: Codable {
     var ReviewDate : Int = 0
     var RememberDate : Int = 0
     init() {}
-    init (ReviewDate: Int) {
+    init(ReviewDate: Int) {
         self.ReviewDate = ReviewDate
         self.RememberDate = TrimToLocalDay(fromDate: Date(timeIntervalSince1970: TimeInterval(self.ReviewDate)))
         self.HasTag = 0
@@ -59,7 +59,18 @@ class ReviewGetResponseBody: Codable {
 
 class ReviewPutRequestBody: Codable {
     var RecordID: String = ""
-    var ReviewDate: Int = 0
     var RememberDate: Int = 0
+    var ReviewDate: Int = 0
+
     init() {}
+    init(RecordID: String, RememberDate: Int, ReviewDate: Int) {
+        self.RecordID = RecordID
+        self.RememberDate = RememberDate
+        self.ReviewDate = ReviewDate
+    }
+    
+    func RequestServer() {
+        
+    }
 }
+

@@ -27,7 +27,7 @@ class ReviewFrontViewController: NSViewController {
     }
     
     @IBAction func Forget(_ sender: NSButton) {
-        self.delegate?.Remember(sender: sender)
+        self.delegate?.Forget(sender: sender)
     }
 
 

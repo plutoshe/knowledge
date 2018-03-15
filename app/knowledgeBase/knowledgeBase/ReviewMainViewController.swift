@@ -9,24 +9,15 @@
 import Cocoa
 
 class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, ReviewBackOperationDelegate {
-    enum PageIndex: Int {
-        case front = 0, back = 1
-        mutating func toggle() {
-            switch self {
-            case .front:
-                self = .back
-            case .back:
-                self = .front
-            }
-        }
-    }
+    
+    // initialization
     private var selectedPageIndex: PageIndex = PageIndex.front
     
-    
     private let defaultSession = URLSession.shared
-    private var Records: DisplayRecord? = nil
-    private var Status: DisplayRecordStatus = DisplayRecordStatus()
+    var currentDate: Int = Int(Date().timeIntervalSince1970)
+    private var Records = DisplayRecord()
     private var DataTask: URLSessionDataTask? = nil
+    @IBOutlet weak var ReviewModeText: NSTextField!
     @IBOutlet weak var contentView: NSView!
     
     private lazy var reviewFrontViewController: ReviewFrontViewController = {
@@ -54,12 +45,52 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         return viewController
     }()
     
-    // Operations in Children
-    
-    func Remember(sender: NSButton) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViewController()
+        refreshData()
     }
     
-    func Forgot(sender: NSButton) {
+    // Operations in Children
+    
+    func SwitchStateOfRecord() {
+        self.Records.RecordItems[self.Records.Status.reversedMode()]!.append(self.Records.CurrentRecord)
+        self.Records.RecordItems[self.Records.Status.mode]!.remove(at: self.Records.Status.displayItem)
+    }
+    
+    func Remember(sender: NSButton) {
+        // change the data(remember and review date) of this record
+        
+        if self.Records.CurrentRecord.RememberDate != currentDate {
+            var reviewRequestBody = ReviewPutRequestBody(
+                RecordID: self.Records.CurrentRecord.RecordID,
+                RememberDate: self.currentDate,
+                ReviewDate: self.currentDate + 2 * (self.Records.CurrentRecord.ReviewDate - self.Records.CurrentRecord.RememberDate))
+        }
+        
+        // if mode is unreviewed, move it to review array, remove it from unreivewed array
+        if self.Records.Status.mode == DisplayModeStatus.UnReviewedRecord {
+            SwitchStateOfRecord()
+        }
+        turnToFrontViewController()
+        reselectDisplayItem()
+        refreshDisplay()
+    }
+    
+    func Forget(sender: NSButton) {
+        // change the data(remember and review date) of this record
+        var reviewPutRequestBody = ReviewPutRequestBody(
+            RecordID: self.Records.CurrentRecord.RecordID,
+            RememberDate: self.currentDate,
+            ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970))
+        
+        // if mode is reviewed, move it to unreviewed array, remve it from reviewed array
+        if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
+            SwitchStateOfRecord()
+        }
+        turnToFrontViewController()
+        reselectDisplayItem()
+        refreshDisplay()
     }
     
     func CheckResult(sender: NSButton) {
@@ -74,54 +105,58 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     // Opeartions in self
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViewController()
-        refreshData()
-        // Do view setup here.
+    @IBAction func ChangeReviewMode(_ sender: NSButton) {
+        self.Records.Status.ToggleMode()
+        reselectDisplayItem()
+        refreshDisplay()
     }
+    
     
     func setupViewController() {
         self.selectedPageIndex = PageIndex.front
         refreshViewController()
-//        refreshViewController()
-//        refreshViewController()
     }
     
     func toggleMode() {
-        self.Status.ToggleMode()
+        self.Records.Status.ToggleMode()
     }
     
     func reselectDisplayItem() {
-        if let size = self.Records?.RecordItems[self.Status.mode]?.count, size > 0{
-            self.Status.displayItem = Int(arc4random_uniform(UInt32(size)))
+        if let size = self.Records.RecordItems[self.Records.Status.mode]?.count, size > 0{
+            self.Records.Status.displayItem = Int(arc4random_uniform(UInt32(size)))
         } else {
-            self.Status.displayItem = -1
+            self.Records.Status.displayItem = -1
         }
         
     }
     
     func refreshDisplay() {
         // Front
-        if (self.Records != nil) {
-            if self.Status.displayItem == -1 {
-                self.reviewFrontViewController.RecordFrontContent.stringValue = "已完成"
-            } else {
-                self.reviewFrontViewController.RecordFrontContent.stringValue = (self.Records?.GetCurrentStatusRecord(display: self.Status).Front[0].Data)!
-                self.reviewBackViewController.RecordContent.stringValue = (self.Records?.GetCurrentStatusRecord(display: self.Status).Front[0].Data)! + "\n" + (self.Records?.GetCurrentStatusRecord(display: self.Status).Back[0].Data)!
-            }
-            self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records!.RecordItems[DisplayModeStatus.ReviewedRecord]!.count)
-            self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records!.RecordItems[DisplayModeStatus.UnReviewedRecord]!.count)
+        if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
+            self.ReviewModeText.stringValue = "复习模式:\n复习已掌握"
+        } else {
+            self.ReviewModeText.stringValue = "复习模式:\n复习未掌握"
+        }
+        
+        if self.Records.Status.displayItem == -1 {
+            self.reviewFrontViewController.RecordFrontContent.stringValue = "已完成"
+        } else {
+            self.reviewFrontViewController.RecordFrontContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.front)
+            self.reviewBackViewController.RecordContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.back)
             
         }
+        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.RecordItems[DisplayModeStatus.ReviewedRecord]!.count)
+        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.RecordItems[DisplayModeStatus.UnReviewedRecord]!.count)
+        
     }
     
     
     func refreshData() {
+        
+        let ReviewGetRequestData = ReviewGetRequestBody(ReviewDate: Int(Date().timeIntervalSince1970))
         if let DataTask = DataTask {
             DataTask.cancel()
         }
-        let ReviewGetRequestData = ReviewGetRequestBody(ReviewDate: Int(Date().timeIntervalSince1970))
         let jsonEncoder = JSONEncoder()
         let ReviewGetRequestJSON = try? jsonEncoder.encode(ReviewGetRequestData)
         print(String(data: ReviewGetRequestJSON!, encoding: String.Encoding.utf8)!)
@@ -191,6 +226,15 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         } else {
             remove(asChildViewController: reviewBackViewController)
             add(asChildViewController: reviewFrontViewController)
+        }
+        refreshDisplay()
+    }
+    
+    func turnToFrontViewController() {
+        if self.selectedPageIndex == PageIndex.back {
+            remove(asChildViewController: reviewBackViewController)
+            add(asChildViewController: reviewFrontViewController)
+            self.selectedPageIndex = PageIndex.front
         }
         refreshDisplay()
     }
