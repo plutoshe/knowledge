@@ -14,9 +14,9 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     private var selectedPageIndex: PageIndex = PageIndex.front
     
     private let defaultSession = URLSession.shared
-    var currentDate: Int = Int(Date().timeIntervalSince1970)
+    var currentDate = Int(TrimToLocalDay(fromDate: Date()))
     private var Records = DisplayRecord()
-    private var DataTask: URLSessionDataTask? = nil
+    private var refreshDataTask: URLSessionDataTask? = nil
     @IBOutlet weak var ReviewModeText: NSTextField!
     @IBOutlet weak var contentView: NSView!
     
@@ -51,6 +51,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         refreshData()
     }
     
+    
     // Operations in Children
     
     func SwitchStateOfRecord() {
@@ -62,10 +63,10 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         // change the data(remember and review date) of this record
         
         if self.Records.CurrentRecord.RememberDate != currentDate {
-            var reviewRequestBody = ReviewPutRequestBody(
+            UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
                 RecordID: self.Records.CurrentRecord.RecordID,
                 RememberDate: self.currentDate,
-                ReviewDate: self.currentDate + 2 * (self.Records.CurrentRecord.ReviewDate - self.Records.CurrentRecord.RememberDate))
+                ReviewDate: self.currentDate + 2 * (self.Records.CurrentRecord.ReviewDate - self.Records.CurrentRecord.RememberDate)))
         }
         
         // if mode is unreviewed, move it to review array, remove it from unreivewed array
@@ -79,10 +80,13 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     func Forget(sender: NSButton) {
         // change the data(remember and review date) of this record
-        var reviewPutRequestBody = ReviewPutRequestBody(
-            RecordID: self.Records.CurrentRecord.RecordID,
-            RememberDate: self.currentDate,
-            ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970))
+        if self.Records.CurrentRecord.RememberDate != currentDate {
+            UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
+                RecordID: self.Records.CurrentRecord.RecordID,
+                RememberDate: self.currentDate,
+                ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970))
+            )
+        }
         
         // if mode is reviewed, move it to unreviewed array, remve it from reviewed array
         if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
@@ -152,10 +156,9 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     
     func refreshData() {
-        
         let ReviewGetRequestData = ReviewGetRequestBody(ReviewDate: Int(Date().timeIntervalSince1970))
-        if let DataTask = DataTask {
-            DataTask.cancel()
+        if let dataTask = refreshDataTask {
+            dataTask.cancel()
         }
         let jsonEncoder = JSONEncoder()
         let ReviewGetRequestJSON = try? jsonEncoder.encode(ReviewGetRequestData)
@@ -174,28 +177,52 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = ReviewGetRequestJSON
         
-        DataTask = defaultSession.dataTask(with: request)
+        refreshDataTask = defaultSession.dataTask(with: request)
         { (data, response, error) in
-            defer { self.DataTask = nil }
+            defer { self.refreshDataTask = nil }
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            let jsonDecoder = JSONDecoder()
+
+            
+            if let recordItems = try? jsonDecoder.decode(ReviewGetResponseBody.self, from: data) {
+                print(String(data: data, encoding: String.Encoding.utf8)!)
+                self.Records = DisplayRecord(rs: recordItems)
+                self.reselectDisplayItem()
+                DispatchQueue.main.async {
+                    print("In showing display after receiving data")
+                    print(self.Records.RecordItems[DisplayModeStatus.ReviewedRecord]?.count)
+                    self.refreshDisplay()
+                }
+            }
+        }
+        refreshDataTask!.resume()
+    }
+    
+    private func UpdateRecordRequestServer(requestBody: ReviewPutRequestBody) {
+
+        let jsonEncoder = JSONEncoder()
+        let ReviewGetRequestJSON = try? jsonEncoder.encode(requestBody)
+        print(String(data: ReviewGetRequestJSON!, encoding: String.Encoding.utf8)!)
+        let ReviewPutURL = URL(string: ReviewURL)
+        var request : URLRequest = URLRequest(url: ReviewPutURL!)
+        
+        request.httpMethod = "PUT"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpBody = ReviewGetRequestJSON
+        
+        refreshDataTask = defaultSession.dataTask(with: request)
+        { (data, response, error) in
+            defer { self.refreshDataTask = nil }
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
             print(String(data: data, encoding: String.Encoding.utf8)!)
-//            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            let jsonDecoder = JSONDecoder()
-//            print("!!!!")
-            
-            //            do {
-            if let recordItems = try? jsonDecoder.decode(ReviewGetResponseBody.self, from: data) {
-                self.Records = DisplayRecord(rs: recordItems)
-                self.reselectDisplayItem()
-                DispatchQueue.main.async {
-                    self.refreshDisplay()
-                }
-            }
         }
-        DataTask!.resume()
+        refreshDataTask!.resume()
     }
 
     

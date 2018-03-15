@@ -68,9 +68,5 @@ class ReviewPutRequestBody: Codable {
         self.RememberDate = RememberDate
         self.ReviewDate = ReviewDate
     }
-    
-    func RequestServer() {
-        
-    }
 }
 

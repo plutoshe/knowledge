@@ -21,11 +21,19 @@ func (rs *ReviewService) Update(w *http.ResponseWriter, r *http.Request) {
 		log.Println("Error, Msg=%v", err.Error())
 		return
 	}
+	log.Println("===============")
+	log.Println(bson.M{"_id": bson.ObjectIdHex(params.RecordID)})
+	log.Println(bson.M{
+		"review_date":   params.ReviewDate,
+		"remember_date": params.RememberDate,
+	})
 	err = rs.RecordStorage.Update(
-		bson.M{"_id": params.RecordID},
+		bson.M{"_id": bson.ObjectIdHex(params.RecordID)},
 		bson.M{
-			"review_date":   params.ReviewDate,
-			"remember_date": params.RememberDate,
+			"$set": bson.M{
+				"review_date":   params.ReviewDate,
+				"remember_date": params.RememberDate,
+			},
 		},
 	)
 }
