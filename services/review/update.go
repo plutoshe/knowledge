@@ -11,6 +11,7 @@ import (
 func UnwarpDataFromUpdateRequestBody(r *http.Request) (ReviewUpdateRequestBody, error) {
 	decoder := json.NewDecoder(r.Body)
 	params := new(ReviewUpdateRequestBody)
+
 	err := decoder.Decode(params)
 	return *params, err
 }
@@ -24,15 +25,17 @@ func (rs *ReviewService) Update(w *http.ResponseWriter, r *http.Request) {
 	log.Println("===============")
 	log.Println(bson.M{"_id": bson.ObjectIdHex(params.RecordID)})
 	log.Println(bson.M{
-		"review_date":   params.ReviewDate,
-		"remember_date": params.RememberDate,
+		"review_date":           params.ReviewDate,
+		"remember_date":         params.RememberDate,
+		"current_review_status": params.CurrentReviewStatus,
 	})
 	err = rs.RecordStorage.Update(
 		bson.M{"_id": bson.ObjectIdHex(params.RecordID)},
 		bson.M{
 			"$set": bson.M{
-				"review_date":   params.ReviewDate,
-				"remember_date": params.RememberDate,
+				"review_date":           params.ReviewDate,
+				"remember_date":         params.RememberDate,
+				"current_review_status": params.CurrentReviewStatus,
 			},
 		},
 	)

@@ -36,6 +36,7 @@ class RecordItem: Codable {
     var CreateDate: Int = 0
     var ReviewDate: Int = 0
     var RememberDate: Int = 0
+    var CurrentReviewStatus: Int = 0
     var Tags: [String] = []
     var Reminder: Int = 0
     func Content(pageIndex: PageIndex) -> String {
@@ -72,8 +73,18 @@ class DisplayRecord {
         self.RecordItems[DisplayModeStatus.UnReviewedRecord] = []
     }
     init(rs: ReviewGetResponseBody) {
-        self.RecordItems[DisplayModeStatus.ReviewedRecord] = rs.ReviewedRecord
         self.RecordItems[DisplayModeStatus.UnReviewedRecord] = rs.UnReviewedRecord
+        self.RecordItems[DisplayModeStatus.ReviewedRecord] = []
+        for element in rs.ReviewedRecord {
+            if element.CurrentReviewStatus == 1 {
+                self.RecordItems[DisplayModeStatus.ReviewedRecord]?.append(element)
+            } else {
+                self.RecordItems[DisplayModeStatus.UnReviewedRecord]?.append(element)
+            }
+        }
+        
+        
+        
     }
     
     func clear() {

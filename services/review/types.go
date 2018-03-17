@@ -15,7 +15,8 @@ type ReviewQueryResponseBody struct {
 }
 
 type ReviewUpdateRequestBody struct {
-	RecordID     string `json:"RecordID"`
-	ReviewDate   int64  `json:"ReviewDate"`
-	RememberDate int64  `json:"RememberDate"`
+	RecordID            string `json:"RecordID"`
+	ReviewDate          int64  `json:"ReviewDate"`
+	RememberDate        int64  `json:"RememberDate"`
+	CurrentReviewStatus int    `json:"CurrentReviewStatus"`
 }

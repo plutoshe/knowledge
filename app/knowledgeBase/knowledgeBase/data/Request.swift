@@ -61,12 +61,14 @@ class ReviewPutRequestBody: Codable {
     var RecordID: String = ""
     var RememberDate: Int = 0
     var ReviewDate: Int = 0
+    var CurrentReviewStatus: Int = 0
 
     init() {}
-    init(RecordID: String, RememberDate: Int, ReviewDate: Int) {
+    init(RecordID: String, RememberDate: Int, ReviewDate: Int, CurrentReviewStatus: Int) {
         self.RecordID = RecordID
         self.RememberDate = RememberDate
         self.ReviewDate = ReviewDate
+        self.CurrentReviewStatus = CurrentReviewStatus
     }
 }
 
