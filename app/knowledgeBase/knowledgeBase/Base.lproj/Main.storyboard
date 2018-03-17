@@ -802,7 +802,7 @@
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="ChangeReviewMode:" target="gFg-TV-lbi" id="2qk-pk-bT6"/>
+                                    <action selector="ChangeReviewMode:" target="gFg-TV-lbi" id="ig0-wC-hKX"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gw6-ZL-6Jr">

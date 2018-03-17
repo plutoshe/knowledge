@@ -80,6 +80,12 @@ class DisplayRecord {
         self.RecordItems.removeAll()
         self.Status.clear()
     }
+    
+    func PrintAll() {
+        print("record ", self.RecordItems)
+        print("mode", self.Status.mode)
+        print("display_item", self.Status.displayItem)
+    }
 }
 
 class RecordStatus {
