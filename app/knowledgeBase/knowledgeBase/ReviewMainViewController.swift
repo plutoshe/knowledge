@@ -53,7 +53,8 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             var viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "ReviewFrontViewController")) as! ReviewFrontViewController
             
             // Add View Controller as Child View Controller
-            self.add(asChildViewController: viewController)
+            self.addChildViewController(viewController)
+//            self.add(asChildViewController: viewController)
             viewController.delegate = self
             //        self.view.addSubview(viewController.view)
             
@@ -128,11 +129,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     }
     
     
-    // Operations in Children
-    
-    
-    
-   
+
 
     
     // Opeartions in self
@@ -249,9 +246,11 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     private func remove(asChildViewController viewController: NSViewController) {
         // Notify Child View Controller
-        self.view.willRemoveSubview(viewController.view)
+        self.view.willRemoveSubview(contentView)
+        
         // Remove Child View From Superview
         viewController.view.removeFromSuperview()
+        
         // Notify Child View Controller
         viewController.removeFromParentViewController()
     }
@@ -261,10 +260,10 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         addChildViewController(viewController)
 
         // Add Child View as Subview
-        view.addSubview(viewController.view)
+        contentView.addSubview(viewController.view)
 
         // Configure Child View
-        viewController.view.frame = view.bounds
+        viewController.view.frame = contentView.bounds
     }
     
     func refreshViewController() {

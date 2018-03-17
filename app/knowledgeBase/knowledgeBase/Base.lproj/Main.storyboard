@@ -791,7 +791,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
-                                <rect key="frame" x="28" y="66" width="421" height="260"/>
+                                <rect key="frame" x="28" y="13" width="438" height="313"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </containerView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
@@ -935,7 +935,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLt-LN-6bl">
-                                <rect key="frame" x="52" y="21" width="67" height="32"/>
+                                <rect key="frame" x="67" y="38" width="67" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PQz-VQ-D26">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -946,7 +946,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-hp-rDX">
-                                <rect key="frame" x="183" y="21" width="80" height="32"/>
+                                <rect key="frame" x="186" y="38" width="80" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="不记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lKX-cZ-yYB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -957,7 +957,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkm-p0-zod">
-                                <rect key="frame" x="305" y="21" width="94" height="32"/>
+                                <rect key="frame" x="307" y="38" width="94" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="跳过 之后复习" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QCh-r9-S6G">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
