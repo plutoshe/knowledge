@@ -14,6 +14,8 @@ class ReviewBackViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
+    @IBOutlet weak var RememberButton: NSButton!
+    @IBOutlet weak var ForgetButton: NSButton!
     
     @IBOutlet weak var RecordContent: NSTextField!
     @IBAction func Omit(_ sender: NSButton) {

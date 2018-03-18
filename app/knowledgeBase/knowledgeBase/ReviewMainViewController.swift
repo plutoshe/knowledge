@@ -22,11 +22,8 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     @IBOutlet weak var ReviewModeText: NSTextField!
     @IBOutlet weak var contentView: NSView!
         // ####Main View
-    
-        @IBAction func TollPage(_ sender: NSButton) {
-            toggleViewController()
-        }
         @IBAction func Refresh(_ sender: Any) {
+            refreshData()
         }
     
         @IBAction func ChangeReviewMode(_ sender: NSButton) {
@@ -132,7 +129,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
 
 
     
-    // Opeartions in self
+    // inner Opeartions in self
     
     func SwitchStateOfRecord() {
         self.Records.RecordItems[self.Records.Status.reversedMode()]!.append(self.Records.CurrentRecord)
@@ -151,25 +148,36 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         
     }
     
+    
+    func setFrontButtonsHiddenStatus(status: Bool) {
+        self.reviewFrontViewController.RememberButton.isHidden = status
+        self.reviewFrontViewController.ForgetButton.isHidden = status
+        self.reviewFrontViewController.CheckResultButton.isHidden = status
+    }
+    
     func refreshDisplay() {
-        // Front
-        self.Records.PrintAll()
+        // mode text refreshment
         if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
             self.ReviewModeText.stringValue = "复习模式:\n复习已掌握"
         } else {
             self.ReviewModeText.stringValue = "复习模式:\n复习未掌握"
         }
         
+        // content showed refreshment
         if self.Records.Status.displayItem == -1 {
+            setFrontButtonsHiddenStatus(status: true)
             self.reviewFrontViewController.RecordFrontContent.stringValue = "已完成"
         } else {
+            setFrontButtonsHiddenStatus(status: false)
             self.reviewFrontViewController.RecordFrontContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.front)
             self.reviewBackViewController.RecordContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.back)
-            
         }
-        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.RecordItems[DisplayModeStatus.ReviewedRecord]!.count)
-        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.RecordItems[DisplayModeStatus.UnReviewedRecord]!.count)
         
+        // review status refreshment
+        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.recordSize(key: DisplayModeStatus.ReviewedRecord))
+        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.recordSize(key: DisplayModeStatus.UnReviewedRecord))
+        
+        // button refresh
     }
     
     

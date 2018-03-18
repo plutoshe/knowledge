@@ -68,10 +68,12 @@ class DisplayRecord {
             self.RecordItems[self.Status.mode]![self.Status.displayItem] = newVal
         }
     }
+    
     init() {
         self.RecordItems[DisplayModeStatus.ReviewedRecord] = []
         self.RecordItems[DisplayModeStatus.UnReviewedRecord] = []
     }
+    
     init(rs: ReviewGetResponseBody) {
         self.RecordItems[DisplayModeStatus.UnReviewedRecord] = rs.UnReviewedRecord
         self.RecordItems[DisplayModeStatus.ReviewedRecord] = []
@@ -96,6 +98,13 @@ class DisplayRecord {
         print("record ", self.RecordItems)
         print("mode", self.Status.mode)
         print("display_item", self.Status.displayItem)
+    }
+    
+    func recordSize(key: DisplayModeStatus) -> Int {
+        if let record = RecordItems[key] {
+            return record.count
+        }
+        return 0
     }
 }
 

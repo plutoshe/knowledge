@@ -813,7 +813,7 @@
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="Refresh:" target="MzP-db-OKN" id="HJ2-Gq-96L"/>
+                                    <action selector="Refresh:" target="gFg-TV-lbi" id="wY4-dm-hNC"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJg-hz-CND">
@@ -907,7 +907,10 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="CheckResultButton" destination="Mfo-Dz-8kE" id="BrX-mi-1j4"/>
+                        <outlet property="ForgetButton" destination="SeZ-pf-m9s" id="Y2w-C3-Wgi"/>
                         <outlet property="RecordFrontContent" destination="Ng7-3w-y5M" id="nlF-1B-mb2"/>
+                        <outlet property="RememberButton" destination="gNO-UT-nzt" id="Gzp-Jm-eGD"/>
                         <outlet property="ReviewedNumberDisplayText" destination="DnF-3K-k0y" id="SPL-vw-YOO"/>
                         <outlet property="UnReviewNumberDisplayText" destination="QWg-CS-57k" id="A0E-sM-GpP"/>
                         <outlet property="UnReviewedNumberDisplayText" destination="QWg-CS-57k" id="TYm-j9-om8"/>
@@ -970,7 +973,9 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="ForgetButton" destination="Cbk-hp-rDX" id="fSh-W0-4RB"/>
                         <outlet property="RecordContent" destination="ZZP-rb-RDo" id="qSg-9E-HEC"/>
+                        <outlet property="RememberButton" destination="NLt-LN-6bl" id="P6D-Qj-via"/>
                     </connections>
                 </viewController>
                 <customObject id="kmT-CC-Z7c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
