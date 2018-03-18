@@ -24,6 +24,7 @@ var (
 	mongoIndexColl = fs.String("mongo_index_coll", "index", "Specify the Mongo index collection")
 	reviewIndex    = fs.String("review_index", "knowledge_review_index", "Review index in index collection")
 	relinkNum      = fs.Int("relink", 5, "The number of relink")
+	mode           = fs.String("mode", "test", "Mode")
 )
 
 func main() {
@@ -31,8 +32,10 @@ func main() {
 		log.Println(err)
 		os.Exit(1)
 	}
-
-	recordStorage := mongo.NewRecordMongo(*mongoAddr, *mongoDB, *mongoChunkColl, *relinkNum)
+	if *mode != "test" {
+		*mode = ""
+	}
+	recordStorage := mongo.NewRecordMongo(*mongoAddr+*mode, *mongoDB, *mongoChunkColl, *relinkNum)
 	// indexStorage := mongo.NewIndexMongo(*mongoAddr, *mongoDB, *mongoIndexColl, *relinkNum)
 
 	mux := http.NewServeMux()
