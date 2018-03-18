@@ -138,14 +138,20 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     func reselectDisplayItem() {
         if let size = self.Records.RecordItems[self.Records.Status.mode]?.count, size > 0{
-            self.Records.Status.displayItem = Int(arc4random_uniform(UInt32(size)))
+            let now = Int(arc4random_uniform(UInt32(size)));
+            if size > 1 && now == self.Records.Status.displayItem {
+                if (now > 0) {
+                    self.Records.Status.displayItem = now - 1;
+                }
+                else {
+                    self.Records.Status.displayItem = now + 1;
+                }
+            } else {
+                self.Records.Status.displayItem = now;
+            }
         } else {
             self.Records.Status.displayItem = -1
         }
-        print("size", self.Records.RecordItems[self.Records.Status.mode]?.count)
-        self.Records.PrintAll()
-        
-        
     }
     
     
