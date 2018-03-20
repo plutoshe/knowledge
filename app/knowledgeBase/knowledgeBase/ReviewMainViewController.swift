@@ -74,15 +74,21 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
             func Remember(sender: NSButton) {
                 // change the data(remember and review date) of this record
-                self.Records.PrintAll()
-                
                 // if mode is unreviewed, move it to review array, remove it from unreivewed array
                 if self.Records.Status.mode == DisplayModeStatus.UnReviewedRecord {
-                    UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
-                        RecordID: self.Records.CurrentRecord.RecordID,
-                        RememberDate: self.currentDate,
-                        ReviewDate: self.currentDate + 2 * (self.Records.CurrentRecord.ReviewDate - self.Records.CurrentRecord.RememberDate),
-                        CurrentReviewStatus: 1))
+                    if self.currentDate != self.Records.CurrentRecord.RememberDate {
+                        UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
+                            RecordID: self.Records.CurrentRecord.RecordID,
+                            RememberDate: self.currentDate,
+                            ReviewDate: self.currentDate + 2 * (self.Records.CurrentRecord.ReviewDate - self.Records.CurrentRecord.RememberDate),
+                            CurrentReviewStatus: 1))
+                    } else {
+                        UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
+                            RecordID: self.Records.CurrentRecord.RecordID,
+                            RememberDate: self.Records.CurrentRecord.RememberDate,
+                            ReviewDate: self.Records.CurrentRecord.ReviewDate,
+                            CurrentReviewStatus: 1))
+                    }
                     SwitchStateOfRecord()
                 }
                 reselectDisplayItem()
@@ -92,12 +98,12 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             func Forget(sender: NSButton) {
                 
                 // if mode is reviewed, move it to unreviewed array, remve it from reviewed array
+                UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
+                    RecordID: self.Records.CurrentRecord.RecordID,
+                    RememberDate: self.currentDate,
+                    ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970),
+                    CurrentReviewStatus: 0))
                 if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
-                    UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
-                        RecordID: self.Records.CurrentRecord.RecordID,
-                        RememberDate: self.currentDate,
-                        ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970),
-                        CurrentReviewStatus: 0))
                     SwitchStateOfRecord()
                 }
                 reselectDisplayItem()

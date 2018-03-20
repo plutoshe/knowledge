@@ -35,7 +35,7 @@ func main() {
 	if *mode != "test" {
 		*mode = ""
 	}
-	recordStorage := mongo.NewRecordMongo(*mongoAddr+*mode, *mongoDB, *mongoChunkColl, *relinkNum)
+	recordStorage := mongo.NewRecordMongo(*mongoAddr, *mongoDB+*mode, *mongoChunkColl, *relinkNum)
 	// indexStorage := mongo.NewIndexMongo(*mongoAddr, *mongoDB, *mongoIndexColl, *relinkNum)
 
 	mux := http.NewServeMux()
