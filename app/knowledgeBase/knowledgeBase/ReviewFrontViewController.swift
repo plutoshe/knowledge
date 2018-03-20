@@ -20,6 +20,8 @@ class ReviewFrontViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        RecordFrontContent.lineBreakMode = .byWordWrapping
+//        RecordFrontContent.setContentCompressionResistancePriority(250, forOrientation: .Horizontal)
     }
     
     @IBAction func CheckResult(_ sender: NSButton) {

@@ -12,6 +12,7 @@ class ReviewBackViewController: NSViewController {
     var delegate: ReviewBackOperationDelegate? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
+        RecordContent.lineBreakMode = .byWordWrapping
         // Do view setup here.
     }
     @IBOutlet weak var RememberButton: NSButton!
