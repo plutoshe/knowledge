@@ -182,7 +182,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         } else {
             setFrontButtonsHiddenStatus(status: false)
             self.reviewFrontViewController.RecordFrontContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.front)
-            self.reviewBackViewController.RecordContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.back)
+            self.reviewBackViewController.RecordContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.front) + "\n" + self.Records.CurrentRecord.Content(pageIndex: PageIndex.back)
         }
         
         // review status refreshment
