@@ -27,7 +27,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         }
     
         @IBAction func ChangeReviewMode(_ sender: NSButton) {
-            self.Records.Status.ToggleMode()
+            self.Records.ToggleMode()
             reselectDisplayItem()
             refreshDisplay()
         }
@@ -36,10 +36,6 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         func setupViewController() {
             self.selectedPageIndex = PageIndex.front
             refreshViewController()
-        }
-    
-        func toggleMode() {
-            self.Records.Status.ToggleMode()
         }
     
         // ####Children View
@@ -110,13 +106,13 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 if self.selectedPageIndex == PageIndex.front {
                     turnToBackViewController()
                 } else {
-                    turnToFrontViewController()
                     reselectDisplayItem()
+                    turnToFrontViewController()
                 }
             }
     
             func CheckResult(sender: NSButton) {
-                toggleViewController()
+                turnToBackViewController()
             }
     
             func Omit(sender: NSButton) {
@@ -143,26 +139,12 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     // inner Opeartions in self
     
     func SwitchStateOfRecord() {
-        self.Records.RecordItems[self.Records.Status.reversedMode()]!.append(self.Records.CurrentRecord)
-        self.Records.RecordItems[self.Records.Status.mode]!.remove(at: self.Records.Status.displayItem)
+        self.Records.ChangeCurrentRecordStatus(status: self.Records.Status.reversedMode())
+        
     }
     
     func reselectDisplayItem() {
-        if let size = self.Records.RecordItems[self.Records.Status.mode]?.count, size > 0{
-            let now = Int(arc4random_uniform(UInt32(size)));
-            if size > 1 && now == self.Records.Status.displayItem {
-                if (now > 0) {
-                    self.Records.Status.displayItem = now - 1;
-                }
-                else {
-                    self.Records.Status.displayItem = now + 1;
-                }
-            } else {
-                self.Records.Status.displayItem = now;
-            }
-        } else {
-            self.Records.Status.displayItem = -1
-        }
+        self.Records.reselectDisplayItem()
     }
     
     
@@ -236,7 +218,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 self.reselectDisplayItem()
                 DispatchQueue.main.async {
                     print("In showing display after receiving data")
-                    print(self.Records.RecordItems[DisplayModeStatus.ReviewedRecord]?.count)
+                    
                     self.refreshDisplay()
                 }
             }

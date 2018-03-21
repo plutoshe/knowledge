@@ -84,9 +84,29 @@ class DisplayRecord {
                 self.RecordItems[DisplayModeStatus.UnReviewedRecord]?.append(element)
             }
         }
-        
-        
-        
+    }
+    
+    func reselectDisplayItem() {
+        if let size = self.RecordItems[self.Status.mode]?.count, size > 0{
+            let now = Int(arc4random_uniform(UInt32(size)));
+            if size > 1 && now == self.Status.displayItem {
+                if (now > 0) {
+                    self.Status.displayItem = now - 1;
+                }
+                else {
+                    self.Status.displayItem = now + 1;
+                }
+            } else {
+                self.Status.displayItem = now;
+            }
+        } else {
+            self.Status.displayItem = -1
+        }
+    }
+    
+    func ChangeCurrentRecordStatus(status: DisplayModeStatus) {
+        self.RecordItems[self.Status.reversedMode()]!.append(self.CurrentRecord)
+        self.RecordItems[self.Status.mode]!.remove(at: self.Status.displayItem)
     }
     
     func clear() {
@@ -98,6 +118,10 @@ class DisplayRecord {
         print("record ", self.RecordItems)
         print("mode", self.Status.mode)
         print("display_item", self.Status.displayItem)
+    }
+    
+    func ToggleMode() {
+        self.Status.ToggleMode()
     }
     
     func recordSize(key: DisplayModeStatus) -> Int {
