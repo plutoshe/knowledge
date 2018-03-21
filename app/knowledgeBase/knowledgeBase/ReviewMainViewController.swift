@@ -106,8 +106,13 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
                     SwitchStateOfRecord()
                 }
-                reselectDisplayItem()
-                turnToFrontViewController()
+                
+                if self.selectedPageIndex == PageIndex.front {
+                    turnToBackViewController()
+                } else {
+                    turnToFrontViewController()
+                    reselectDisplayItem()
+                }
             }
     
             func CheckResult(sender: NSButton) {
@@ -302,6 +307,15 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             remove(asChildViewController: reviewBackViewController)
             add(asChildViewController: reviewFrontViewController)
             self.selectedPageIndex = PageIndex.front
+        }
+        refreshDisplay()
+    }
+    
+    func turnToBackViewController() {
+        if self.selectedPageIndex == PageIndex.front {
+            remove(asChildViewController: reviewFrontViewController)
+            add(asChildViewController: reviewBackViewController)
+            self.selectedPageIndex = PageIndex.back
         }
         refreshDisplay()
     }
