@@ -11,7 +11,6 @@ import (
 )
 
 type updateBody struct {
-	query  mongo.RecordItem `json:"query"`
 	update mongo.RecordItem `json:"update"`
 }
 

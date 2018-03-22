@@ -14,11 +14,10 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     // ####View
     // initialization
     private var selectedPageIndex: PageIndex = PageIndex.front
-    
+    private let reviewRequests: ReviewRequest = ReviewRequest()
     private let defaultSession = URLSession.shared
     var currentDate = Int(TrimToLocalDay(fromDate: Date()))
     private var Records = DisplayRecord()
-    private var refreshDataTask: URLSessionDataTask? = nil
     @IBOutlet weak var ReviewModeText: NSTextField!
     @IBOutlet weak var contentView: NSView!
         // ####Main View
@@ -184,40 +183,28 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     func refreshData() {
         let ReviewGetRequestData = ReviewGetRequestBody(ReviewDate: Int(Date().timeIntervalSince1970))
-        if let dataTask = refreshDataTask {
-            dataTask.cancel()
-        }
         let jsonEncoder = JSONEncoder()
         let ReviewGetRequestJSON = try? jsonEncoder.encode(ReviewGetRequestData)
         print(String(data: ReviewGetRequestJSON!, encoding: String.Encoding.utf8)!)
-        let urlComponents = NSURLComponents(string: ReviewURL)!
-        urlComponents.queryItems = [
+        
+        let queryItems = [
             URLQueryItem(name: "HasTag", value: String(ReviewGetRequestData.HasTag)),
             URLQueryItem(name: "Tags", value: ReviewGetRequestData.Tags.joined(separator: ",")),
             URLQueryItem(name: "ReviewDate", value: String(ReviewGetRequestData.ReviewDate)),
             URLQueryItem(name: "RememberDate", value: String(ReviewGetRequestData.RememberDate)),
-        ]
-        let ReviewGetURL = urlComponents.url
-        var request : URLRequest = URLRequest(url: ReviewGetURL!)
-        
-        request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = ReviewGetRequestJSON
-        
-        refreshDataTask = defaultSession.dataTask(with: request)
+            ]
+        self.reviewRequests.GETRequest(queryItems: queryItems)
         { (data, response, error) in
-            defer { self.refreshDataTask = nil }
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
             let jsonDecoder = JSONDecoder()
 
-            
             if let recordItems = try? jsonDecoder.decode(ReviewGetResponseBody.self, from: data) {
                 print(String(data: data, encoding: String.Encoding.utf8)!)
                 self.Records = DisplayRecord(rs: recordItems)
-
+                
                 DispatchQueue.main.async {
                     print("In showing display after receiving data")
                     self.currentDate = Int(TrimToLocalDay(fromDate: Date()))
@@ -225,7 +212,6 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 }
             }
         }
-        refreshDataTask!.resume()
     }
     
     func UpdateLocalRecord(requestBody: ReviewPutRequestBody) {
@@ -238,26 +224,15 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     }
     
     private func UpdateRecordRequestServer(requestBody: ReviewPutRequestBody) {
-        let jsonEncoder = JSONEncoder()
-        let ReviewGetRequestJSON = try? jsonEncoder.encode(requestBody)
-        print(String(data: ReviewGetRequestJSON!, encoding: String.Encoding.utf8)!)
-        let ReviewPutURL = URL(string: ReviewURL)
-        var request : URLRequest = URLRequest(url: ReviewPutURL!)
         
-        request.httpMethod = "PUT"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = ReviewGetRequestJSON
-        
-        refreshDataTask = defaultSession.dataTask(with: request)
+        reviewRequests.PUTRequest(requestBody: requestBody)
         { (data, response, error) in
-            defer { self.refreshDataTask = nil }
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
             print(String(data: data, encoding: String.Encoding.utf8)!)
         }
-        refreshDataTask!.resume()
     }
 
     
