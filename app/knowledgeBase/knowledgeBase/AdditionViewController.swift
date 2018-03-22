@@ -12,14 +12,31 @@ class AdditionViewController: NSViewController {
 
     @IBOutlet weak var FrontContent: NSTextField!
     @IBOutlet weak var BackContent: NSTextField!
+    var mode = "POST"
     var recordRequests = RecordRequest()
+    var CurrentRecord: RecordItem? = nil
     
+    @IBOutlet weak var SubmitButton: NSButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
     
-    @IBAction func submitRecord(_ sender: Any) {
+    override func viewWillAppear() {
+        if mode == "PUT" {
+            SubmitButton.title = "修改"
+            if let currentRecord = self.CurrentRecord {
+                self.FrontContent.stringValue = currentRecord.Front[0].Data
+                self.BackContent.stringValue = currentRecord.Back[0].Data
+            }
+        } else {
+            self.FrontContent.stringValue = ""
+            self.BackContent.stringValue = ""
+            SubmitButton.title = "添加"
+        }
+    }
+    
+    func AddRecord() {
         let recordPostRequestData = RecordPostRequestBody(
             FrontContent: [Content(Form:"TEXT", Data:FrontContent.stringValue)],
             BackContent: [Content(Form:"TEXT", Data:BackContent.stringValue)]
@@ -42,7 +59,44 @@ class AdditionViewController: NSViewController {
             let RecordPOSTJSON = try? jsonEncoder.encode(recordPostRequestData)
             
             myAlert.messageText = String(data: RecordPOSTJSON!, encoding: String.Encoding.utf8)!
-        
+            
         }
+    }
+    
+    func ModifyRecord() {
+        if self.CurrentRecord == nil {
+            return
+        }
+        self.CurrentRecord!.Front = [Content(Form:"TEXT", Data:FrontContent.stringValue)]
+        self.CurrentRecord!.Back = [Content(Form:"TEXT", Data:BackContent.stringValue)]
+        
+        
+        recordRequests.PUTRequest(recordPUTRequstBody: self.CurrentRecord!) { data, response, error in
+            guard error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            DispatchQueue.main.async {
+                if let tabBarController = self.parent as? NSTabViewController {
+                    let reviewViewController = tabBarController.childViewControllers[0] as! AdditionViewController
+                    reviewViewController.CurrentRecord = self.CurrentRecord
+                    tabBarController.selectedTabViewItemIndex = 1
+                }
+            }
+        }
+        
+    }
+    
+    @IBAction func submitRecord(_ sender: Any) {
+        if mode == "POST" {
+            AddRecord()
+        } else {
+            ModifyRecord()
+        }
+    }
+    
+    override func viewWillDisappear() {
+        mode = "POST"
+        self.CurrentRecord = nil
     }
 }

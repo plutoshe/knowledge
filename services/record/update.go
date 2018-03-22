@@ -10,9 +10,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type updateBody struct {
-	update mongo.RecordItem `json:"update"`
-}
+type updateBody = mongo.RecordItem
 
 func (rs *RecordService) Update(w *http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
@@ -26,9 +24,8 @@ func (rs *RecordService) Update(w *http.ResponseWriter, r *http.Request) {
 
 	// type conversion
 	var query_bson, update_bson bson.M
-	bsonBytes, _ := bson.Marshal(params.query)
-	bson.Unmarshal(bsonBytes, &query_bson)
-	bsonBytes, _ = bson.Marshal(params.update)
+	query_bson = bson.M{"_id": params.RecordID}
+	bsonBytes, _ := bson.Marshal(params)
 	bson.Unmarshal(bsonBytes, &update_bson)
 	if err := rs.RecordStorage.Update(query_bson, update_bson); err != nil {
 		helper.WriteHTTPError(*w, helper.ErrInternalServer)

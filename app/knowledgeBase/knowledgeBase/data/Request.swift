@@ -39,7 +39,7 @@ class RecordPostRequestBody: Codable {
     }
 }
 
-typealias RecordPutRequestBody = RecordPostRequestBody
+typealias RecordPutRequestBody = RecordItem
 
 class ReviewGetRequestBody: Codable {
     var HasTag : Int = 0
@@ -121,13 +121,18 @@ class ReviewRequest {
     
     init() {}
     
-    func GETRequest(queryItems: [URLQueryItem], completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    func GETRequest(ReviewGetRequestData: ReviewGetRequestBody, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         if let dataTask = GETDataTask {
             dataTask.cancel()
         }
         
         let urlComponents = NSURLComponents(string: ReviewURL)!
-        urlComponents.queryItems = queryItems
+        urlComponents.queryItems = [
+            URLQueryItem(name: "HasTag", value: String(ReviewGetRequestData.HasTag)),
+            URLQueryItem(name: "Tags", value: ReviewGetRequestData.Tags.joined(separator: ",")),
+            URLQueryItem(name: "ReviewDate", value: String(ReviewGetRequestData.ReviewDate)),
+            URLQueryItem(name: "RememberDate", value: String(ReviewGetRequestData.RememberDate)),
+        ]
         
         let ReviewGetURL = urlComponents.url
         var request : URLRequest = URLRequest(url: ReviewGetURL!)

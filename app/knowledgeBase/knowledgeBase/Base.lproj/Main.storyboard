@@ -740,6 +740,7 @@
                     <connections>
                         <outlet property="BackContent" destination="TpS-wz-0Fp" id="Cek-FM-vld"/>
                         <outlet property="FrontContent" destination="XC0-QI-8DW" id="uix-a8-1Gj"/>
+                        <outlet property="SubmitButton" destination="7dP-6O-j7g" id="aAB-3Y-Yep"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -816,9 +817,21 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kHv-1h-WYc">
+                                <rect key="frame" x="524" y="375" width="80" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="修改" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="F5z-Ld-wNE">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="ModifyRecord:" target="gFg-TV-lbi" id="Zmg-HR-HGd"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="ModificationButton" destination="kHv-1h-WYc" id="qyH-rO-bCa"/>
                         <outlet property="ReviewModeText" destination="rJg-hz-CND" id="zPp-Ex-eRn"/>
                         <outlet property="contentView" destination="uXW-yZ-jxq" id="1hd-O4-3un"/>
                     </connections>

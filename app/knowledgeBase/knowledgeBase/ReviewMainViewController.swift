@@ -127,11 +127,25 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 turnToBackViewController()
             }
     
-            func Omit(sender: NSButton) {
-                self.Records.ReoloadCurrentReviewedItem()
-                turnToFrontViewController()
-            }
+    @IBOutlet weak var ModificationButton: NSButton!
     
+    @IBAction func ModifyRecord(_ sender: NSButton) {
+        if let tabBarController = self.parent as? NSTabViewController {
+            let recordViewController = tabBarController.childViewControllers[0] as! AdditionViewController
+            recordViewController.CurrentRecord = self.Records.CurrentRecord
+            recordViewController.mode = "PUT"
+            tabBarController.selectedTabViewItemIndex = 0
+        }
+    }
+    
+    func Omit(sender: NSButton) {
+        self.Records.ReoloadCurrentReviewedItem()
+        turnToFrontViewController()
+    }
+    
+    override func viewWillAppear() {
+        self.refreshDisplay()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,19 +153,11 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         refreshData()
     }
     
-
-    
-    // inner Opeartions in self
-    
-    func SwitchStateOfRecord() {
-        self.Records.ChangeCurrentRecordStatus(status: self.Records.reversedMode())
-        
-    }
-    
     func setFrontButtonsHiddenStatus(status: Bool) {
         self.reviewFrontViewController.RememberButton.isHidden = status
         self.reviewFrontViewController.ForgetButton.isHidden = status
         self.reviewFrontViewController.CheckResultButton.isHidden = status
+        
     }
     
     func refreshDisplay() {
@@ -165,9 +171,11 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         // content showed refreshment
         if let currentRecord = self.Records.CurrentRecord {
             setFrontButtonsHiddenStatus(status: false)
+            self.ModificationButton.isHidden = false
             self.reviewFrontViewController.RecordFrontContent.stringValue = currentRecord.Content(pageIndex: PageIndex.front)
             self.reviewBackViewController.RecordContent.stringValue = currentRecord.Content(pageIndex: PageIndex.front) + "\n" + currentRecord.Content(pageIndex: PageIndex.back)
         } else {
+            self.ModificationButton.isHidden = true
             setFrontButtonsHiddenStatus(status: true)
             self.reviewFrontViewController.RecordFrontContent.stringValue = "已完成"
         }
@@ -187,13 +195,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         let ReviewGetRequestJSON = try? jsonEncoder.encode(ReviewGetRequestData)
         print(String(data: ReviewGetRequestJSON!, encoding: String.Encoding.utf8)!)
         
-        let queryItems = [
-            URLQueryItem(name: "HasTag", value: String(ReviewGetRequestData.HasTag)),
-            URLQueryItem(name: "Tags", value: ReviewGetRequestData.Tags.joined(separator: ",")),
-            URLQueryItem(name: "ReviewDate", value: String(ReviewGetRequestData.ReviewDate)),
-            URLQueryItem(name: "RememberDate", value: String(ReviewGetRequestData.RememberDate)),
-            ]
-        self.reviewRequests.GETRequest(queryItems: queryItems)
+        self.reviewRequests.GETRequest(ReviewGetRequestData: ReviewGetRequestData)
         { (data, response, error) in
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
