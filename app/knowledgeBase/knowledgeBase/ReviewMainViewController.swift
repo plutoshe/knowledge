@@ -158,9 +158,9 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     func refreshDisplay() {
         // mode text refreshment
         if self.Records.mode == DisplayModeStatus.ReviewedRecord {
-            self.ReviewModeText.stringValue = "复习模式:\n复习已掌握"
+            self.ReviewModeText.stringValue = "模式: 复习已掌握"
         } else {
-            self.ReviewModeText.stringValue = "复习模式:\n复习未掌握"
+            self.ReviewModeText.stringValue = "模式: 复习未掌握"
         }
         
         // content showed refreshment
@@ -174,8 +174,9 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         }
         
         // review status refreshment
-        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.recordSize(requestMode: DisplayModeStatus.ReviewedRecord))
-        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.recordSize(requestMode: DisplayModeStatus.UnReviewedRecord))
+        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.ReviewedRecordCount)
+        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.UnReviewedRecordCount)
+        self.reviewFrontViewController.RemainDisplayText.stringValue = "剩余:" + String(describing: self.Records.ReviewOrderRemain)
         
         // button refresh
     }

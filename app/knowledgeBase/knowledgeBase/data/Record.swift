@@ -63,6 +63,11 @@ class DisplayRecord {
     var RecordItems = [String: RecordItem]()
     var UnReviewedRecordCount: Int = 0
     var ReviewedRecordCount: Int = 0
+    var ReviewOrderRemain: Int {
+        get {
+            return self.ReviewedOrder.count
+        }
+    }
     var ReviewedOrder: Queue<String> = Queue<String>()
     var currentReviewRecordID = ""
     
@@ -170,7 +175,9 @@ class DisplayRecord {
     func ReoloadCurrentReviewedItem() {
         if let currentRecordID = self.ReviewedOrder.peek() {
             self.ReviewedOrder.remove()
-            self.ReviewedOrder.append(value: currentRecordID)
+            if self.mode == DisplayModeStatus.UnReviewedRecord {
+                self.ReviewedOrder.append(value: currentRecordID)
+            } 
         }
         if let currentRecordID = self.ReviewedOrder.peek() {
             self.currentReviewRecordID = currentRecordID

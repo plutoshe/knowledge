@@ -21,6 +21,7 @@ public class Node<T> {
 public struct Queue<T> {
     fileprivate var head: Node<T>?
     private var tail: Node<T>?
+    public var count: Int = 0
 
     public func isEmpty() -> Bool {
         return head == nil
@@ -44,11 +45,13 @@ public struct Queue<T> {
             self.head = newNode
             self.tail = newNode
         }
+        count += 1
     }
     
     public mutating func removeAll() {
         self.head = nil
         self.tail = nil
+        count = 0
     }
     
     public mutating func remove() {
@@ -60,6 +63,7 @@ public struct Queue<T> {
                 self.head = nil
                 self.tail = nil
             }
+            count -= 1
         }
     }
     

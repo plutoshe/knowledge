@@ -744,7 +744,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="911" y="95"/>
+            <point key="canvasLocation" x="1322" y="-148"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="EBW-nF-2nA">
@@ -782,7 +782,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
-                                <rect key="frame" x="28" y="147" width="438" height="313"/>
+                                <rect key="frame" x="0.0" y="147" width="438" height="313"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </containerView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
@@ -808,7 +808,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJg-hz-CND">
-                                <rect key="frame" x="426" y="429" width="77" height="40"/>
+                                <rect key="frame" x="145" y="457" width="168" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="复习模式： " id="wLV-19-YTZ">
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -825,7 +825,7 @@
                 </viewController>
                 <customObject id="gj8-GZ-s9r" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="526.5" y="585"/>
+            <point key="canvasLocation" x="526" y="585"/>
         </scene>
         <!--Review Front View Controller-->
         <scene sceneID="5fx-f7-fO2">
@@ -836,16 +836,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DnF-3K-k0y">
-                                <rect key="frame" x="59" y="451" width="71" height="17"/>
+                                <rect key="frame" x="209" y="451" width="71" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="已复习:0" id="Noy-fg-zSu">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="已掌握:0" id="Noy-fg-zSu">
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QWg-CS-57k">
-                                <rect key="frame" x="59" y="432" width="71" height="17"/>
+                                <rect key="frame" x="134" y="451" width="71" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="未掌握:0" id="otr-lN-EeE">
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -895,12 +895,22 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pCE-Ts-GpP">
+                                <rect key="frame" x="59" y="450" width="71" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="剩余:0" id="hKW-Un-Ox6">
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="CheckResultButton" destination="Mfo-Dz-8kE" id="BrX-mi-1j4"/>
                         <outlet property="ForgetButton" destination="SeZ-pf-m9s" id="Y2w-C3-Wgi"/>
                         <outlet property="RecordFrontContent" destination="Ng7-3w-y5M" id="nlF-1B-mb2"/>
+                        <outlet property="RemainDisplayText" destination="pCE-Ts-GpP" id="ZbM-YQ-683"/>
                         <outlet property="RememberButton" destination="gNO-UT-nzt" id="Gzp-Jm-eGD"/>
                         <outlet property="ReviewedNumberDisplayText" destination="DnF-3K-k0y" id="SPL-vw-YOO"/>
                         <outlet property="UnReviewNumberDisplayText" destination="QWg-CS-57k" id="A0E-sM-GpP"/>
@@ -909,7 +919,7 @@
                 </viewController>
                 <customObject id="EOn-M6-fig" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1097" y="494"/>
+            <point key="canvasLocation" x="1209" y="428"/>
         </scene>
         <!--Review Back View Controller-->
         <scene sceneID="bJU-RR-FaM">
@@ -971,7 +981,7 @@
                 </viewController>
                 <customObject id="kmT-CC-Z7c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1106" y="965.5"/>
+            <point key="canvasLocation" x="1365" y="1004"/>
         </scene>
     </scenes>
 </document>

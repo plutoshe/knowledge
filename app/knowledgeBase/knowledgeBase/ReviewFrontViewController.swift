@@ -14,6 +14,7 @@ class ReviewFrontViewController: NSViewController {
     @IBOutlet weak var UnReviewedNumberDisplayText: NSTextField!
     @IBOutlet weak var RecordFrontContent: NSTextField!
     
+    @IBOutlet weak var RemainDisplayText: NSTextField!
     @IBOutlet weak var RememberButton: NSButton!
     @IBOutlet weak var ForgetButton: NSButton!
     @IBOutlet weak var CheckResultButton: NSButton!
