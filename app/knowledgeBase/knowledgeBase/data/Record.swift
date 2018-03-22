@@ -59,91 +59,62 @@ enum DisplayModeStatus: Int{
 }
 
 class DisplayRecord {
-    var RecordItems = [DisplayModeStatus: [RecordItem]]()
-    var Status = RecordStatus()
-    var CurrentRecord: RecordItem { get {
-            return self.RecordItems[self.Status.mode]![self.Status.displayItem]
+    var mode: DisplayModeStatus = .UnReviewedRecord
+    var RecordItems = [String: RecordItem]()
+    var UnReviewedRecordCount: Int = 0
+    var ReviewedRecordCount: Int = 0
+    var ReviewedOrder: Queue<String> = Queue<String>()
+    var currentReviewRecordID = ""
+    
+    var CurrentRecord: RecordItem? {
+        get {
+            if self.currentReviewRecordID == "" {
+                return nil
+            } else {
+                return self.RecordItems[self.currentReviewRecordID]!
+            }
         }
         set(newVal) {
-            self.RecordItems[self.Status.mode]![self.Status.displayItem] = newVal
+            self.RecordItems[self.currentReviewRecordID] = newVal
         }
     }
     
     init() {
-        self.RecordItems[DisplayModeStatus.ReviewedRecord] = []
-        self.RecordItems[DisplayModeStatus.UnReviewedRecord] = []
     }
     
     init(rs: ReviewGetResponseBody) {
-        self.RecordItems[DisplayModeStatus.UnReviewedRecord] = rs.UnReviewedRecord
-        self.RecordItems[DisplayModeStatus.ReviewedRecord] = []
-        for element in rs.ReviewedRecord {
-            if element.CurrentReviewStatus == 1 {
-                self.RecordItems[DisplayModeStatus.ReviewedRecord]?.append(element)
-            } else {
-                self.RecordItems[DisplayModeStatus.UnReviewedRecord]?.append(element)
-            }
+        for element in rs.UnReviewedRecord {
+            element.CurrentReviewStatus = 0
+            self.RecordItems[element.RecordID] = element
         }
+        for element in rs.ReviewedRecord {
+            self.RecordItems[element.RecordID] = element
+        }
+        RefreshReviewOrder()
     }
     
-    func reselectDisplayItem() {
-        if let size = self.RecordItems[self.Status.mode]?.count, size > 0{
-            let now = Int(arc4random_uniform(UInt32(size)));
-            if size > 1 && now == self.Status.displayItem {
-                if (now > 0) {
-                    self.Status.displayItem = now - 1;
-                }
-                else {
-                    self.Status.displayItem = now + 1;
-                }
-            } else {
-                self.Status.displayItem = now;
-            }
-        } else {
-            self.Status.displayItem = -1
-        }
-    }
     
     func ChangeCurrentRecordStatus(status: DisplayModeStatus) {
-        self.RecordItems[self.Status.reversedMode()]!.append(self.CurrentRecord)
-        self.RecordItems[self.Status.mode]!.remove(at: self.Status.displayItem)
+        if mode == DisplayModeStatus.UnReviewedRecord {
+            self.ReviewedRecordCount += 1
+            self.UnReviewedRecordCount -= 1
+        } else {
+            self.ReviewedRecordCount -= 1
+            self.UnReviewedRecordCount += 1
+        }
+        
     }
     
     func clear() {
         self.RecordItems.removeAll()
-        self.Status.clear()
+        self.ReviewedRecordCount = 0
+        self.UnReviewedRecordCount = 0
     }
     
     func PrintAll() {
         print("record ", self.RecordItems)
-        print("mode", self.Status.mode)
-        print("display_item", self.Status.displayItem)
     }
     
-    func ToggleMode() {
-        self.Status.ToggleMode()
-    }
-    
-    func recordSize(key: DisplayModeStatus) -> Int {
-        if let record = RecordItems[key] {
-            return record.count
-        }
-        return 0
-    }
-}
-
-class RecordStatus {
-    var mode: DisplayModeStatus = .UnReviewedRecord
-    var displayItem: Int = -1
-
-    init() {}
-    func ToggleMode() {
-        mode = reversedMode()
-    }
-    func clear() {
-        self.mode = .UnReviewedRecord
-        self.displayItem = -1
-    }
     func reversedMode() -> DisplayModeStatus {
         switch mode {
         case .ReviewedRecord:
@@ -152,6 +123,69 @@ class RecordStatus {
             return DisplayModeStatus.ReviewedRecord
         }
     }
-   
+    
+    func ToggleMode() {
+        mode = self.reversedMode()
+        self.RefreshReviewOrder()
+    }
+    
+    func RefreshReviewOrder() {
+        self.ReviewedOrder.removeAll()
+        self.UnReviewedRecordCount = 0
+        self.ReviewedRecordCount = 0
+        for (_, element) in self.RecordItems {
+            if element.CurrentReviewStatus == 0 {
+                self.UnReviewedRecordCount+=1
+            } else {
+                self.ReviewedRecordCount+=1
+            }
+            if (self.mode == DisplayModeStatus.UnReviewedRecord && element.CurrentReviewStatus == 0) ||
+               (self.mode == DisplayModeStatus.ReviewedRecord && element.CurrentReviewStatus == 1) {
+                self.ReviewedOrder.append(value: element.RecordID)
+            }
+        }
+        if let currentRecordID = self.ReviewedOrder.peek() {
+            self.currentReviewRecordID = currentRecordID
+        } else {
+            self.currentReviewRecordID = ""
+        }
+    }
+    
+    func RemoveCurrentReviewedItem() {
+        if let currentRecord = self.CurrentRecord {
+            if currentRecord.CurrentReviewStatus == 0 {
+                ChangeCurrentRecordStatus(status: DisplayModeStatus.UnReviewedRecord)
+            } else {
+                ChangeCurrentRecordStatus(status: DisplayModeStatus.ReviewedRecord)
+            }
+        }
+        self.ReviewedOrder.remove()
+        if let currentRecordID = self.ReviewedOrder.peek() {
+            self.currentReviewRecordID = currentRecordID
+        } else {
+            self.currentReviewRecordID = ""
+        }
+    }
+    
+    func ReoloadCurrentReviewedItem() {
+        if let currentRecordID = self.ReviewedOrder.peek() {
+            self.ReviewedOrder.remove()
+            self.ReviewedOrder.append(value: currentRecordID)
+        }
+        if let currentRecordID = self.ReviewedOrder.peek() {
+            self.currentReviewRecordID = currentRecordID
+        } else {
+            self.currentReviewRecordID = ""
+        }
+    }
+    
+    func recordSize(requestMode: DisplayModeStatus) -> Int {
+        switch requestMode {
+        case .ReviewedRecord:
+            return ReviewedRecordCount
+        case .UnReviewedRecord:
+            return UnReviewedRecordCount
+        }
+    }
 }
 

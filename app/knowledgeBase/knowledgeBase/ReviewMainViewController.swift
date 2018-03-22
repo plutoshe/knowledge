@@ -28,7 +28,6 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
         @IBAction func ChangeReviewMode(_ sender: NSButton) {
             self.Records.ToggleMode()
-            reselectDisplayItem()
             refreshDisplay()
         }
     
@@ -71,43 +70,57 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             func Remember(sender: NSButton) {
                 // change the data(remember and review date) of this record
                 // if mode is unreviewed, move it to review array, remove it from unreivewed array
-                if self.Records.Status.mode == DisplayModeStatus.UnReviewedRecord {
-                    if self.currentDate != self.Records.CurrentRecord.RememberDate {
-                        UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
-                            RecordID: self.Records.CurrentRecord.RecordID,
-                            RememberDate: self.currentDate,
-                            ReviewDate: self.currentDate + 2 * (self.Records.CurrentRecord.ReviewDate - self.Records.CurrentRecord.RememberDate),
-                            CurrentReviewStatus: 1))
+                if let currentRecord = self.Records.CurrentRecord {
+                    if self.Records.mode == DisplayModeStatus.UnReviewedRecord {
+                        if self.currentDate != currentRecord.RememberDate {
+                            let requestBody = ReviewPutRequestBody(
+                                RecordID: currentRecord.RecordID,
+                                RememberDate: self.currentDate,
+                                ReviewDate: self.currentDate + 2 * (currentRecord.ReviewDate - currentRecord.RememberDate),
+                                CurrentReviewStatus: 1)
+                            UpdateRecordRequestServer(requestBody: requestBody)
+                            UpdateLocalRecord(requestBody: requestBody)
+                        } else {
+                            let requestBody = ReviewPutRequestBody(
+                                RecordID: currentRecord.RecordID,
+                                RememberDate: currentRecord.RememberDate,
+                                ReviewDate: currentRecord.ReviewDate,
+                                CurrentReviewStatus: 1)
+                            UpdateRecordRequestServer(requestBody: requestBody)
+                            UpdateLocalRecord(requestBody: requestBody)
+                        }
+                        self.Records.RemoveCurrentReviewedItem()
                     } else {
-                        UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
-                            RecordID: self.Records.CurrentRecord.RecordID,
-                            RememberDate: self.Records.CurrentRecord.RememberDate,
-                            ReviewDate: self.Records.CurrentRecord.ReviewDate,
-                            CurrentReviewStatus: 1))
+                        self.Records.ReoloadCurrentReviewedItem()
                     }
-                    SwitchStateOfRecord()
+                    turnToFrontViewController()
                 }
-                reselectDisplayItem()
-                turnToFrontViewController()
+                
             }
     
             func Forget(sender: NSButton) {
                 
                 // if mode is reviewed, move it to unreviewed array, remve it from reviewed array
-                UpdateRecordRequestServer(requestBody: ReviewPutRequestBody(
-                    RecordID: self.Records.CurrentRecord.RecordID,
-                    RememberDate: self.currentDate,
-                    ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970),
-                    CurrentReviewStatus: 0))
-                if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
-                    SwitchStateOfRecord()
-                }
-                
-                if self.selectedPageIndex == PageIndex.front {
-                    turnToBackViewController()
-                } else {
-                    reselectDisplayItem()
-                    turnToFrontViewController()
+                if let currentRecord = self.Records.CurrentRecord {
+                    let requestBody = ReviewPutRequestBody(
+                        RecordID: currentRecord.RecordID,
+                        RememberDate: self.currentDate,
+                        ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970),
+                        CurrentReviewStatus: 0)
+                    UpdateRecordRequestServer(requestBody: requestBody)
+                    UpdateLocalRecord(requestBody: requestBody)
+                    
+                    
+                    if self.selectedPageIndex == PageIndex.front {
+                        turnToBackViewController()
+                    } else {
+                        if self.Records.mode == DisplayModeStatus.ReviewedRecord {
+                            self.Records.RemoveCurrentReviewedItem()
+                        } else {
+                            self.Records.ReoloadCurrentReviewedItem()
+                        }
+                        turnToFrontViewController()
+                    }
                 }
             }
     
@@ -116,14 +129,9 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             }
     
             func Omit(sender: NSButton) {
-                reselectDisplayItem()
-                toggleViewController()
+                self.Records.ReoloadCurrentReviewedItem()
+                turnToFrontViewController()
             }
-    
-    
-    
-
-    
     
     
     override func viewDidLoad() {
@@ -132,21 +140,14 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         refreshData()
     }
     
-    
-
 
     
     // inner Opeartions in self
     
     func SwitchStateOfRecord() {
-        self.Records.ChangeCurrentRecordStatus(status: self.Records.Status.reversedMode())
+        self.Records.ChangeCurrentRecordStatus(status: self.Records.reversedMode())
         
     }
-    
-    func reselectDisplayItem() {
-        self.Records.reselectDisplayItem()
-    }
-    
     
     func setFrontButtonsHiddenStatus(status: Bool) {
         self.reviewFrontViewController.RememberButton.isHidden = status
@@ -156,25 +157,25 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     func refreshDisplay() {
         // mode text refreshment
-        if self.Records.Status.mode == DisplayModeStatus.ReviewedRecord {
+        if self.Records.mode == DisplayModeStatus.ReviewedRecord {
             self.ReviewModeText.stringValue = "复习模式:\n复习已掌握"
         } else {
             self.ReviewModeText.stringValue = "复习模式:\n复习未掌握"
         }
         
         // content showed refreshment
-        if self.Records.Status.displayItem == -1 {
+        if let currentRecord = self.Records.CurrentRecord {
+            setFrontButtonsHiddenStatus(status: false)
+            self.reviewFrontViewController.RecordFrontContent.stringValue = currentRecord.Content(pageIndex: PageIndex.front)
+            self.reviewBackViewController.RecordContent.stringValue = currentRecord.Content(pageIndex: PageIndex.front) + "\n" + currentRecord.Content(pageIndex: PageIndex.back)
+        } else {
             setFrontButtonsHiddenStatus(status: true)
             self.reviewFrontViewController.RecordFrontContent.stringValue = "已完成"
-        } else {
-            setFrontButtonsHiddenStatus(status: false)
-            self.reviewFrontViewController.RecordFrontContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.front)
-            self.reviewBackViewController.RecordContent.stringValue = self.Records.CurrentRecord.Content(pageIndex: PageIndex.front) + "\n" + self.Records.CurrentRecord.Content(pageIndex: PageIndex.back)
         }
         
         // review status refreshment
-        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.recordSize(key: DisplayModeStatus.ReviewedRecord))
-        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.recordSize(key: DisplayModeStatus.UnReviewedRecord))
+        self.reviewFrontViewController.ReviewedNumberDisplayText.stringValue = "已掌握:" + String(describing: self.Records.recordSize(requestMode: DisplayModeStatus.ReviewedRecord))
+        self.reviewFrontViewController.UnReviewedNumberDisplayText.stringValue = "未掌握:" + String(describing: self.Records.recordSize(requestMode: DisplayModeStatus.UnReviewedRecord))
         
         // button refresh
     }
@@ -215,10 +216,10 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             if let recordItems = try? jsonDecoder.decode(ReviewGetResponseBody.self, from: data) {
                 print(String(data: data, encoding: String.Encoding.utf8)!)
                 self.Records = DisplayRecord(rs: recordItems)
-                self.reselectDisplayItem()
+
                 DispatchQueue.main.async {
                     print("In showing display after receiving data")
-                    
+                    self.currentDate = Int(TrimToLocalDay(fromDate: Date()))
                     self.refreshDisplay()
                 }
             }
@@ -226,8 +227,16 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         refreshDataTask!.resume()
     }
     
+    func UpdateLocalRecord(requestBody: ReviewPutRequestBody) {
+        if let currentRecord = self.Records.RecordItems[requestBody.RecordID] {
+           currentRecord.ReviewDate = requestBody.ReviewDate
+           currentRecord.RememberDate = requestBody.RememberDate
+           currentRecord.CurrentReviewStatus = requestBody.CurrentReviewStatus
+           self.Records.RecordItems[requestBody.RecordID] = currentRecord
+        }
+    }
+    
     private func UpdateRecordRequestServer(requestBody: ReviewPutRequestBody) {
-
         let jsonEncoder = JSONEncoder()
         let ReviewGetRequestJSON = try? jsonEncoder.encode(requestBody)
         print(String(data: ReviewGetRequestJSON!, encoding: String.Encoding.utf8)!)
