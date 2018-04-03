@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="CtN-I8-ega">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="CtN-I8-ega">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -721,6 +721,7 @@
                                 <buttonCell key="cell" type="push" title="添加" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KmO-3A-uqz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">`</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="submitRecord:" target="XfG-lQ-9wD" id="5rT-Jh-CgH"/>
@@ -759,7 +760,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <font key="font" metaFont="message"/>
-                        <tabViewItems/>
                         <connections>
                             <outlet property="delegate" destination="CtN-I8-ega" id="ot2-MO-40P"/>
                         </connections>
@@ -783,7 +783,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXW-yZ-jxq">
-                                <rect key="frame" x="0.0" y="147" width="438" height="313"/>
+                                <rect key="frame" x="0.0" y="0.0" width="640" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </containerView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DET-UH-9yc">
@@ -792,6 +792,7 @@
                                 <buttonCell key="cell" type="push" title="转变复习模式" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pZ7-da-MsP">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">u</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="ChangeReviewMode:" target="gFg-TV-lbi" id="ig0-wC-hKX"/>
@@ -803,6 +804,7 @@
                                 <buttonCell key="cell" type="push" title="刷新数据" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6bE-4n-EbN">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">h</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="Refresh:" target="gFg-TV-lbi" id="wY4-dm-hNC"/>
@@ -823,6 +825,7 @@
                                 <buttonCell key="cell" type="push" title="修改" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="F5z-Ld-wNE">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">m</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="ModifyRecord:" target="gFg-TV-lbi" id="Zmg-HR-HGd"/>
@@ -866,41 +869,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-pf-m9s">
-                                <rect key="frame" x="186" y="160" width="80" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="不记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YrN-rZ-JtH">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="Forget:" target="MzP-db-OKN" id="xSK-bq-cGe"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mfo-Dz-8kE">
-                                <rect key="frame" x="307" y="160" width="94" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="查看结果" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OGg-kz-ApQ">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="CheckResult:" target="MzP-db-OKN" id="Hs3-7D-Wqa"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNO-UT-nzt">
-                                <rect key="frame" x="67" y="160" width="67" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gau-n3-iE2">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="Remember:" target="MzP-db-OKN" id="jvr-jB-coh"/>
-                                </connections>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ng7-3w-y5M">
-                                <rect key="frame" x="59" y="237" width="365" height="177"/>
+                                <rect key="frame" x="59" y="154" width="483" height="260"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="gZw-Sy-8dc">
                                     <font key="font" metaFont="system" size="23"/>
@@ -917,6 +887,42 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-pf-m9s">
+                                <rect key="frame" x="174" y="78" width="80" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="不记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YrN-rZ-JtH">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">k</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Forget:" target="MzP-db-OKN" id="xSK-bq-cGe"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mfo-Dz-8kE">
+                                <rect key="frame" x="295" y="78" width="94" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="查看结果" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OGg-kz-ApQ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">l</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="CheckResult:" target="MzP-db-OKN" id="Hs3-7D-Wqa"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNO-UT-nzt">
+                                <rect key="frame" x="55" y="78" width="67" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gau-n3-iE2">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">j</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Remember:" target="MzP-db-OKN" id="jvr-jB-coh"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -943,7 +949,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZZP-rb-RDo">
-                                <rect key="frame" x="47" y="221" width="399" height="233"/>
+                                <rect key="frame" x="47" y="136" width="523" height="318"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="YiV-sH-Rfc">
                                     <font key="font" metaFont="system" size="17"/>
@@ -952,33 +958,36 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLt-LN-6bl">
-                                <rect key="frame" x="69" y="160" width="67" height="32"/>
+                                <rect key="frame" x="55" y="78" width="67" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PQz-VQ-D26">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">j</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="Remember:" target="aaO-rA-66A" id="wVH-7f-0At"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-hp-rDX">
-                                <rect key="frame" x="188" y="160" width="80" height="32"/>
+                                <rect key="frame" x="174" y="78" width="80" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="不记得" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lKX-cZ-yYB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">k</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="Forget:" target="aaO-rA-66A" id="asv-lF-HAu"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkm-p0-zod">
-                                <rect key="frame" x="309" y="160" width="94" height="32"/>
+                                <rect key="frame" x="295" y="78" width="94" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="跳过 之后复习" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QCh-r9-S6G">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                    <string key="keyEquivalent">l</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="Omit:" target="aaO-rA-66A" id="fRM-bj-Bfg"/>
