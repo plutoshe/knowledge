@@ -36,6 +36,10 @@ class AdditionViewController: NSViewController {
         }
     }
     
+    @IBAction func SubmitFromTextFieldThroughKeyShortcut(_ sender: Any) {
+        
+    }
+    
     func AddRecord() {
         let recordPostRequestData = RecordPostRequestBody(
             FrontContent: [Content(Form:"TEXT", Data:FrontContent.stringValue)],
