@@ -631,6 +631,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Goto" id="yro-Hd-qNF">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Goto" systemMenu="help" id="wcS-nh-NDF">
+                                    <items>
+                                        <menuItem title="knowledgeBase Help" keyEquivalent="?" id="x1L-2l-Xq4">
+                                            <connections>
+                                                <action selector="showHelp:" target="Ady-hI-5gd" id="ylO-aW-43P"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Window" id="aUF-d1-5bR">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
@@ -704,6 +716,9 @@
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <action selector="bbb:" target="XfG-lQ-9wD" id="PAV-Vc-pYv"/>
+                                                </connections>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOz-OG-TGW">
                                                 <rect key="frame" x="18" y="78" width="31" height="17"/>
@@ -778,9 +793,9 @@
                         <tabViewItem id="xYw-Or-KB8"/>
                         <tabViewItem id="XML-xN-3I2"/>
                     </tabViewItems>
-                    <tabView key="tabView" type="noTabsNoBorder" id="o2q-XI-juF">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <tabView key="tabView" misplaced="YES" type="noTabsNoBorder" id="o2q-XI-juF">
+                        <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <font key="font" metaFont="message"/>
                         <connections>
                             <outlet property="delegate" destination="CtN-I8-ega" id="ot2-MO-40P"/>

@@ -58,6 +58,14 @@ enum DisplayModeStatus: Int{
     case ReviewedRecord = 0, UnReviewedRecord
 }
 
+extension Array {
+    mutating func shuffle() {
+        for _ in 0..<((count>0) ? (count-1) : 0) {
+            sort { (_,_) in arc4random() < arc4random() }
+        }
+    }
+}
+
 class DisplayRecord {
     var mode: DisplayModeStatus = .UnReviewedRecord
     var RecordItems = [String: RecordItem]()
@@ -138,6 +146,7 @@ class DisplayRecord {
         self.ReviewedOrder.removeAll()
         self.UnReviewedRecordCount = 0
         self.ReviewedRecordCount = 0
+        var reviewOrderArray : [String] = []
         for (_, element) in self.RecordItems {
             if element.CurrentReviewStatus == 0 {
                 self.UnReviewedRecordCount+=1
@@ -146,9 +155,17 @@ class DisplayRecord {
             }
             if (self.mode == DisplayModeStatus.UnReviewedRecord && element.CurrentReviewStatus == 0) ||
                (self.mode == DisplayModeStatus.ReviewedRecord && element.CurrentReviewStatus == 1) {
-                self.ReviewedOrder.append(value: element.RecordID)
+                reviewOrderArray.append(element.RecordID)
             }
         }
+        
+        // shuffle the order array
+        reviewOrderArray.shuffle()
+        print("count: ", reviewOrderArray.count)
+        for element in reviewOrderArray {
+            self.ReviewedOrder.append(value: element)
+        }
+        
         if let currentRecordID = self.ReviewedOrder.peek() {
             self.currentReviewRecordID = currentRecordID
         } else {

@@ -22,6 +22,7 @@ class AdditionViewController: NSViewController {
         // Do view setup here.
     }
     
+
     override func viewWillAppear() {
         if mode == "PUT" {
             SubmitButton.title = "修改"
