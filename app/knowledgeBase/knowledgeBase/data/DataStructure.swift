@@ -8,6 +8,20 @@
 
 import Foundation
 
+
+protocol ReviewOrderProtocol {
+    associatedtype Element
+    func isEmpty() -> Bool
+    var count: Int {
+        get
+    }
+    func append(value: Element)
+    func removeHead()
+    func removeAll()
+    func peek() -> Element?
+    func relocateHead()
+}
+
 public class Node<T> {
     var value: T
     var next: Node<T>?
@@ -18,7 +32,7 @@ public class Node<T> {
     }
 }
 
-public struct Queue<T> {
+public class Queue<T>: ReviewOrderProtocol {
     fileprivate var head: Node<T>?
     private var tail: Node<T>?
     public var count: Int = 0
@@ -35,7 +49,7 @@ public struct Queue<T> {
         return tail
     }
     
-    public mutating func append(value: T) {
+    public func append(value: T) {
         let newNode = Node<T>(value: value);
         if let tailNode = self.tail {
             tailNode.next = newNode
@@ -48,13 +62,13 @@ public struct Queue<T> {
         count += 1
     }
     
-    public mutating func removeAll() {
+    public func removeAll() {
         self.head = nil
         self.tail = nil
         count = 0
     }
     
-    public mutating func remove() {
+    public func removeHead() {
         if let head = self.head {
             if let next = head.next {
                 next.previous = nil
@@ -70,5 +84,66 @@ public struct Queue<T> {
     public func peek() -> T? {
         return self.first?.value
     }
+    
+    public func relocateHead() {
+        self.append(value: head!.value)
+        self.removeHead()
+    }
+    
 }
 
+public class QueueBasedOnArray<T>: ReviewOrderProtocol {
+    public var count: Int {
+        get {
+            return self.elementArray.count
+        }
+    }
+    var relocationFrom: Int = 7
+    var relocationTo: Int = 20
+    var scope = 0
+    init() {
+        scope = relocationTo - relocationFrom + 1
+    }
+    init(relocationFrom: Int, relocationTo: Int) {
+        self.relocationFrom = relocationFrom
+        self.relocationTo = relocationTo
+        self.scope = relocationTo - relocationFrom + 1
+    }
+    
+    private var elementArray = [T]()
+    public func isEmpty() -> Bool {
+        return elementArray.count == 0
+    }
+    
+    
+    public func append(value: T) {
+        elementArray.append(value)
+    }
+    
+    public func removeAll() {
+        self.elementArray.removeAll()
+    }
+    
+    public func removeHead() {
+        self.elementArray.remove(at: 0)
+    }
+    
+    public func peek() -> T? {
+        if self.elementArray.count > 0 {
+            return self.elementArray[0]
+        } else {
+            return nil
+        }
+    }
+    
+    public func relocateHead() {
+        if self.elementArray.count > 0 {
+            var pos = Int(arc4random_uniform(UInt32(scope))) + relocationFrom
+            if pos > self.elementArray.count {
+                pos = self.elementArray.count
+            }
+            self.elementArray.insert(elementArray[0], at: pos)
+            self.elementArray.remove(at: 0)
+        }
+    }
+}

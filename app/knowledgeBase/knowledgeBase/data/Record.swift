@@ -76,7 +76,7 @@ class DisplayRecord {
             return self.ReviewedOrder.count
         }
     }
-    var ReviewedOrder: Queue<String> = Queue<String>()
+    var ReviewedOrder: QueueBasedOnArray<String> = QueueBasedOnArray<String>()
     var currentReviewRecordID = ""
     
     var CurrentRecord: RecordItem? {
@@ -181,7 +181,7 @@ class DisplayRecord {
                 ChangeCurrentRecordStatus(status: DisplayModeStatus.ReviewedRecord)
             }
         }
-        self.ReviewedOrder.remove()
+        self.ReviewedOrder.removeHead()
         if let currentRecordID = self.ReviewedOrder.peek() {
             self.currentReviewRecordID = currentRecordID
         } else {
@@ -190,17 +190,8 @@ class DisplayRecord {
     }
     
     func ReoloadCurrentReviewedItem() {
-        if let currentRecordID = self.ReviewedOrder.peek() {
-            self.ReviewedOrder.remove()
-            if self.mode == DisplayModeStatus.UnReviewedRecord {
-                self.ReviewedOrder.append(value: currentRecordID)
-            } 
-        }
-        if let currentRecordID = self.ReviewedOrder.peek() {
-            self.currentReviewRecordID = currentRecordID
-        } else {
-            self.currentReviewRecordID = ""
-        }
+        self.ReviewedOrder.relocateHead()
+        self.currentReviewRecordID = self.ReviewedOrder.peek()!
     }
     
     func recordSize(requestMode: DisplayModeStatus) -> Int {
