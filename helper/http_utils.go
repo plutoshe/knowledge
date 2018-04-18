@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/MISingularity/NiServer/pkg/log"
+	"github.com/qiniu/log"
 )
 
 // allowMethod verifies that the given method is one of the allowed methods,
