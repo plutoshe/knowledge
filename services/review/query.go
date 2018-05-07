@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/plutoshe/knowledge/helper"
 	"gopkg.in/mgo.v2/bson"
@@ -30,7 +31,8 @@ func UnwarpDataFromQueryRequestBody(r *http.Request) (ReviewQueryRequestBody, er
 	return params, nil
 }
 
-func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w *http.ResponseWriter) error {
+func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w http.ResponseWriter) error {
+	startTime := time.Now()
 	resultUnReviewed, err := rs.RecordStorage.Query(bson.M{
 		"review_date": bson.M{
 			"$lt": params.ReviewDate,
@@ -45,34 +47,28 @@ func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody, w *http.Res
 	if err != nil {
 		return err
 	}
+	log.Println(time.Now().Sub(startTime))
 	result := ReviewQueryResponseBody{
 		UnReviewedRecord: resultUnReviewed,
 		ReviewedRecord:   resultReviewed,
 	}
-
-	resultJSON, err := json.Marshal(result)
-	if err == nil {
-		log.Println(string(resultJSON))
-	}
-	log.Println(result)
-	encode := json.NewEncoder(*w)
+	encode := json.NewEncoder(w)
 	return encode.Encode(result)
 }
 
-func (rs *ReviewService) Query(w *http.ResponseWriter, r *http.Request) {
+func (rs *ReviewService) Query(w http.ResponseWriter, r *http.Request) {
 	log.Println("In Review Query")
-
 	params, err := UnwarpDataFromQueryRequestBody(r)
 	if err != nil {
-		helper.WriteHTTPError(*w, helper.ErrBadRequestBody)
-		log.Println("Error Msg=%v", err.Error())
+		helper.WriteHTTPError(w, helper.ErrBadRequestBody)
+		log.Printf("Error Msg=%v\n", err.Error())
 		return
 	}
-	log.Println(params)
+	// log.Println(params)
 	err = rs.RetrieveData(params, w)
 	if err != nil {
-		helper.WriteHTTPError(*w, helper.ErrBadRequestBody)
-		log.Println("Error Msg=%v", err.Error())
+		helper.WriteHTTPError(w, helper.ErrBadRequestBody)
+		log.Printf("Retrive data failed, Error Msg=%v\n", err.Error())
 		return
 	}
 }

@@ -16,7 +16,7 @@ func UnwarpDataFromUpdateRequestBody(r *http.Request) (ReviewUpdateRequestBody, 
 	return *params, err
 }
 
-func (rs *ReviewService) Update(w *http.ResponseWriter, r *http.Request) {
+func (rs *ReviewService) Update(w http.ResponseWriter, r *http.Request) {
 	params, err := UnwarpDataFromUpdateRequestBody(r)
 	if err != nil {
 		log.Println("Error, Msg=%v", err.Error())

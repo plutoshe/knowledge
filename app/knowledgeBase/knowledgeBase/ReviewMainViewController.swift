@@ -70,7 +70,8 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 // change the data(remember and review date) of this record
                 // if mode is unreviewed, move it to review array, remove it from unreivewed array
                 if let currentRecord = self.Records.CurrentRecord {
-                    if self.Records.mode == DisplayModeStatus.UnReviewedRecord {
+                    print(currentRecord.ReviewTimes)
+                    if self.Records.mode == DisplayModeStatus.UnReviewedRecord && currentRecord.ReviewTimes! <= 1 {
                         if self.currentDate != currentRecord.RememberDate {
                             let requestBody = ReviewPutRequestBody(
                                 RecordID: currentRecord.RecordID,
@@ -106,6 +107,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                         RememberDate: self.currentDate,
                         ReviewDate: Int(Calendar.current.date(byAdding: .day, value: 1, to: Date(timeIntervalSince1970:TimeInterval(self.currentDate)))!.timeIntervalSince1970),
                         CurrentReviewStatus: 0)
+                    self.Records.CurrentRecord!.ReviewTimes = 3
                     UpdateRecordRequestServer(requestBody: requestBody)
                     UpdateLocalRecord(requestBody: requestBody)
                     
@@ -191,6 +193,8 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
     
     
     func refreshData() {
+        turnToFrontViewController()
+        self.reviewFrontViewController.RecordFrontContent.stringValue = "准备中"
         let ReviewGetRequestData = ReviewGetRequestBody(ReviewDate: Int(Date().timeIntervalSince1970))
         let jsonEncoder = JSONEncoder()
         let ReviewGetRequestJSON = try? jsonEncoder.encode(ReviewGetRequestData)
@@ -205,9 +209,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             let jsonDecoder = JSONDecoder()
 
             if let recordItems = try? jsonDecoder.decode(ReviewGetResponseBody.self, from: data) {
-                print(String(data: data, encoding: String.Encoding.utf8)!)
                 self.Records = DisplayRecord(rs: recordItems)
-                
                 DispatchQueue.main.async {
                     print("In showing display after receiving data")
                     self.currentDate = Int(TrimToLocalDay(fromDate: Date()))

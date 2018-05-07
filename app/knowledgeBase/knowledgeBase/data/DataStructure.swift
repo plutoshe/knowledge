@@ -19,7 +19,8 @@ protocol ReviewOrderProtocol {
     func removeHead()
     func removeAll()
     func peek() -> Element?
-    func relocateHead()
+    func relocateHeadByScope()
+    func relocateHeadToTail()
 }
 
 public class Node<T> {
@@ -32,73 +33,13 @@ public class Node<T> {
     }
 }
 
-public class Queue<T>: ReviewOrderProtocol {
-    fileprivate var head: Node<T>?
-    private var tail: Node<T>?
-    public var count: Int = 0
-
-    public func isEmpty() -> Bool {
-        return head == nil
-    }
-    
-    public var first: Node<T>? {
-        return head
-    }
-    
-    public var last: Node<T>? {
-        return tail
-    }
-    
-    public func append(value: T) {
-        let newNode = Node<T>(value: value);
-        if let tailNode = self.tail {
-            tailNode.next = newNode
-            newNode.previous = tailNode
-            self.tail = newNode
-        } else {
-            self.head = newNode
-            self.tail = newNode
-        }
-        count += 1
-    }
-    
-    public func removeAll() {
-        self.head = nil
-        self.tail = nil
-        count = 0
-    }
-    
-    public func removeHead() {
-        if let head = self.head {
-            if let next = head.next {
-                next.previous = nil
-                self.head = next;
-            } else {
-                self.head = nil
-                self.tail = nil
-            }
-            count -= 1
-        }
-    }
-    
-    public func peek() -> T? {
-        return self.first?.value
-    }
-    
-    public func relocateHead() {
-        self.append(value: head!.value)
-        self.removeHead()
-    }
-    
-}
-
 public class QueueBasedOnArray<T>: ReviewOrderProtocol {
     public var count: Int {
         get {
             return self.elementArray.count
         }
     }
-    var relocationFrom: Int = 7
+    var relocationFrom: Int = 10
     var relocationTo: Int = 20
     var scope = 0
     init() {
@@ -136,7 +77,7 @@ public class QueueBasedOnArray<T>: ReviewOrderProtocol {
         }
     }
     
-    public func relocateHead() {
+    public func relocateHeadByScope() {
         if self.elementArray.count > 0 {
             var pos = Int(arc4random_uniform(UInt32(scope))) + relocationFrom
             if pos > self.elementArray.count {
@@ -145,5 +86,10 @@ public class QueueBasedOnArray<T>: ReviewOrderProtocol {
             self.elementArray.insert(elementArray[0], at: pos)
             self.elementArray.remove(at: 0)
         }
+    }
+    
+    public func relocateHeadToTail() {
+        self.elementArray.append(elementArray[0])
+        self.elementArray.remove(at: 0)
     }
 }

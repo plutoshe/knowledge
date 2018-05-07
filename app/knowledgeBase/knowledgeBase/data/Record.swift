@@ -39,6 +39,7 @@ class RecordItem: Codable {
     var CurrentReviewStatus: Int = 0
     var Tags: [String] = []
     var Reminder: Int = 0
+    var ReviewTimes: Int? = 0
     func Content(pageIndex: PageIndex) -> String {
         var result = ""
         if pageIndex == PageIndex.front {
@@ -96,11 +97,17 @@ class DisplayRecord {
     }
     
     init(rs: ReviewGetResponseBody) {
+        let currentDate = Int(TrimToLocalDay(fromDate: Date()))
         for element in rs.UnReviewedRecord {
             element.CurrentReviewStatus = 0
+            element.ReviewTimes = 0
             self.RecordItems[element.RecordID] = element
         }
         for element in rs.ReviewedRecord {
+            element.ReviewTimes = 0
+            if element.CurrentReviewStatus == 0 {
+                element.ReviewTimes = 3
+            }
             self.RecordItems[element.RecordID] = element
         }
         RefreshReviewOrder()
@@ -190,7 +197,10 @@ class DisplayRecord {
     }
     
     func ReoloadCurrentReviewedItem() {
-        self.ReviewedOrder.relocateHead()
+        if let reviewTimes = self.CurrentRecord!.ReviewTimes {
+            self.CurrentRecord!.ReviewTimes = reviewTimes - 1
+        }
+        self.ReviewedOrder.relocateHeadByScope()
         self.currentReviewRecordID = self.ReviewedOrder.peek()!
     }
     

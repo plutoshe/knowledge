@@ -48,8 +48,8 @@ func main() {
 	}
 	hs := http.Server{
 		Addr:         *hl,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 5 * time.Second,
+		ReadTimeout:  20 * time.Second,
+		WriteTimeout: 20 * time.Second,
 		Handler:      mux,
 	}
 	log.Printf("main: serving HTTP on %s", hs.Addr)
