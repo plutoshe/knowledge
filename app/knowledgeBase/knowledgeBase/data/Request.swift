@@ -7,11 +7,14 @@
 //
 
 import Foundation
-
+//
 //let DefaultRecordURL = "http://150.95.129.63:16759/record"
 //let DefaultReviewURL = "http://150.95.129.63:16759/review"
-let DefaultRecordURL = "http://127.0.0.1:16759/record"
-let DefaultReviewURL = "http://127.0.0.1:16759/review"
+//let DefaultRecordURL = "http://127.0.0.1:16759/record"
+//let DefaultReviewURL = "http://127.0.0.1:16759/review"
+let DefaultRecordURL = "http://192.168.0.100:16759/record"
+let DefaultReviewURL = "http://192.168.0.100:16759/review"
+
 
 func TrimToLocalDay(fromDate: Date) -> Int {
     let gregorian = Calendar(identifier: .gregorian)

@@ -109,6 +109,7 @@ class DisplayRecord {
                 element.ReviewTimes = 3
             }
             self.RecordItems[element.RecordID] = element
+            
         }
         RefreshReviewOrder()
     }
@@ -153,7 +154,7 @@ class DisplayRecord {
         self.ReviewedOrder.removeAll()
         self.UnReviewedRecordCount = 0
         self.ReviewedRecordCount = 0
-        var reviewOrderArray : [String] = []
+        var reviewOrderArray : [(String, Int)] = []
         for (_, element) in self.RecordItems {
             if element.CurrentReviewStatus == 0 {
                 self.UnReviewedRecordCount+=1
@@ -162,15 +163,16 @@ class DisplayRecord {
             }
             if (self.mode == DisplayModeStatus.UnReviewedRecord && element.CurrentReviewStatus == 0) ||
                (self.mode == DisplayModeStatus.ReviewedRecord && element.CurrentReviewStatus == 1) {
-                reviewOrderArray.append(element.RecordID)
+                reviewOrderArray.append((element.RecordID, element.RememberDate))
             }
         }
         
         // shuffle the order array
         reviewOrderArray.shuffle()
+        reviewOrderArray.sort(by: { $0.1 > $1.1})
         print("count: ", reviewOrderArray.count)
         for element in reviewOrderArray {
-            self.ReviewedOrder.append(value: element)
+            self.ReviewedOrder.append(value: element.0)
         }
         
         if let currentRecordID = self.ReviewedOrder.peek() {
