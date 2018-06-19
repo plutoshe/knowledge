@@ -47,7 +47,7 @@ func (rs *ReviewService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Operation
 	log.Println(r.Header)
 	switch r.Method {
-	case "POST":
+	case "GET":
 		rs.Query(w, r)
 		break
 	case "PUT":

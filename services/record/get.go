@@ -15,14 +15,14 @@ func (rs *RecordService) GetMethod(w *http.ResponseWriter, r *http.Request) {
 	tags := []string{}
 	queryRule := bson.M{}
 
-	if len(querys["tag"]) > 0 {
-		for _, i := range querys["tag"] {
+	if len(querys["Tag"]) > 0 {
+		for _, i := range querys["Tag"] {
 			tags = append(tags, strings.Split(i, ",")...)
 		}
 		queryRule["tags"] = bson.M{"$all": tags}
 	}
-	if len(querys["keyword"]) > 0 {
-		regexRule := ".*" + querys["keyword"][0] + ".*"
+	if len(querys["Keyword"]) > 0 {
+		regexRule := ".*" + querys["Keyword"][0] + ".*"
 		queryRule = bson.M{"$or": []bson.M{
 			bson.M{"front.data": bson.M{"$regex": regexRule}},
 			bson.M{"back.data": bson.M{"$regex": regexRule}},

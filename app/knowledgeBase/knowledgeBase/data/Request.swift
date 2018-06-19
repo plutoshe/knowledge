@@ -26,6 +26,13 @@ func TrimToLocalDay(fromDate: Date) -> Int {
     return Int(gregorian.date(from: components)!.timeIntervalSince1970)
 }
 
+class RecordGetRequestBody: Codable {
+    var Keyword : String = ""
+    init(Keyword: String) {
+        self.Keyword = Keyword
+    }
+}
+
 class RecordPostRequestBody: Codable {
     var FrontContent : [Content] = []
     var BackContent: [Content] = []
@@ -82,6 +89,7 @@ class ReviewPutRequestBody: Codable {
 class RecordRequest {
     private var POSTDataTask: URLSessionDataTask? = nil
     private var PUTDataTask: URLSessionDataTask? = nil
+    private var GETDataTask: URLSessionDataTask? = nil
     private let defaultSession = URLSession.shared
     var RecordURL = DefaultRecordURL
     init() {}
@@ -116,6 +124,21 @@ class RecordRequest {
         PUTDataTask!.resume()
     }
     
+    func GETRequest(recordGetRequestBody: RecordGetRequestBody, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        
+        let urlComponents = NSURLComponents(string: RecordURL)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "Keyword", value: recordGetRequestBody.Keyword),
+        ]
+        
+        var request: URLRequest = URLRequest(url: urlComponents.url!)
+        request.httpMethod = "GET"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        GETDataTask = defaultSession.dataTask(with: request, completionHandler: completionHandler)
+        GETDataTask!.resume()
+    }
+    
 }
 
 class ReviewRequest {
@@ -141,7 +164,7 @@ class ReviewRequest {
         
         let ReviewGetURL = urlComponents.url
         var request : URLRequest = URLRequest(url: ReviewGetURL!)
-        request.httpMethod = "POST" // currently, Get request has some errors when request, therefore use Post temporarily.
+        request.httpMethod = "GET" 
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         GETDataTask = defaultSession.dataTask(with: request, completionHandler: completionHandler)
