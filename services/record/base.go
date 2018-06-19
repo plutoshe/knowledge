@@ -45,12 +45,12 @@ func (rs *RecordService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Operation
 	switch r.Method {
 	case "GET":
-		rs.Query(&w, r)
+		rs.GetMethod(&w, r)
 		break
 	case "POST":
-		rs.AddRecord(&w, r)
+		rs.PostMethond(&w, r)
 		break
 	case "PUT":
-		rs.Update(&w, r)
+		rs.PutMethond(&w, r)
 	}
 }

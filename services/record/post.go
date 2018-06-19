@@ -10,7 +10,8 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-func (rs *RecordService) AddRecord(w *http.ResponseWriter, r *http.Request) {
+// Addition
+func (rs *RecordService) PostMethond(w *http.ResponseWriter, r *http.Request) {
 	// PARAMS
 
 	decoder := json.NewDecoder(r.Body)

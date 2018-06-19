@@ -12,7 +12,8 @@ import (
 
 type updateBody = mongo.RecordItem
 
-func (rs *RecordService) Update(w *http.ResponseWriter, r *http.Request) {
+// Update Record
+func (rs *RecordService) PutMethond(w *http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	params := new(updateBody)
 	log.Println(r.Body)
