@@ -9,22 +9,68 @@
 import Cocoa
 
 class RecordQueryViewController: NSViewController {
-
+    var recordRequests = RecordRequest()
+    @IBOutlet weak var DisplayView: NSView!
+    @IBOutlet weak var SearchKeyword: NSTextField!
+    @IBOutlet weak var BackButton: NSButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
-        //self.tableView.reloadData()
+        BackButton.title = "First"
     }
-    var recordRequests = RecordRequest()
     
+    override func viewWillAppear() {
+        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
+        let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "DisplaySearchRecordViewController")) as! DisplaySearchRecordViewController
+        viewController.CheckDetailFromParent = DisplayDetailRecord
+        self.addChildViewController(viewController)
+        viewController.view.frame = self.DisplayView.bounds
+        self.DisplayView.addSubview(viewController.view)
+    }
     
-    @IBOutlet weak var RetrievedData: NSScrollView!
-    @IBOutlet weak var SearchKeyword: NSTextField!
     @IBAction func Search(_ sender: NSButton) {
-        print("=========+")
-        recordRequests.GETRequest(recordGetRequestBody: RecordGetRequestBody(Keyword: SearchKeyword.stringValue)) { data, response, error in
-//            RetrievedData.
+        for child in self.childViewControllers {
+            child.viewWillDisappear()
+            self.DisplayView.willRemoveSubview(child.view)
+            child.view.removeFromSuperviewWithoutNeedingDisplay()
+            child.removeFromParentViewController()
         }
+//        recordRequests.GETRequest(recordGetRequestBody: RecordGetRequestBody(Keyword: SearchKeyword.stringValue)) { data, response, error in
+////            RetrievedData.
+//        }
+        
+    }
+    
+
+    @IBAction func BackFromChild(_ sender: Any) {
+        if BackButton.title == "Back " {
+            if let lastChildren = self.childViewControllers.last {
+                lastChildren.viewWillDisappear()
+                self.DisplayView.willRemoveSubview(lastChildren.view)
+                lastChildren.view.removeFromSuperviewWithoutNeedingDisplay()
+                lastChildren.removeFromParentViewController()
+                self.childViewControllers.last!.view.isHidden = false
+                if self.DisplayView.subviews.count == 1 {
+                    BackButton.title = "First"
+                }
+            }
+        }
+    }
+    
+    func DisplayDetailRecord(record: RecordItem) {
+        self.BackButton.title = "Back "
+        self.DisplayView.subviews.last!.isHidden = true
+        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
+        let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "DisplayRecordViewController")) as! DisplayRecordViewController
+        viewController.DisplayRecord = record
+        self.addChildViewController(viewController)
+        self.DisplayView.addSubview(viewController.view)
+        viewController.view.frame = self.DisplayView.bounds
+        
+//        self.DisplayView.addSubview(viewController.view, positioned: NSWindow.OrderingMode.above, relativeTo: nil)
+    }
+    
+    @IBAction func DisplayRecord(_ sender: Any) {
         
         
     }

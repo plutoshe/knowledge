@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="CtN-I8-ega">
     <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="14019"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
+        <capability name="the Touch Bar" minToolsVersion="8.1" minSystemVersion="10.12.2" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -660,6 +662,13 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
+                                        <menuItem title="Show Previous Tab" keyEquivalent="[" id="9El-oH-7AH">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="Show Next Tab" keyEquivalent="]" id="NNc-iN-zt0">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Srx-pf-Yg3"/>
                                         <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -691,7 +700,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-50" y="-768"/>
+            <point key="canvasLocation" x="-35" y="-997"/>
         </scene>
         <!--Addition View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -784,12 +793,12 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="678.5" y="-186"/>
+            <point key="canvasLocation" x="635" y="-695"/>
         </scene>
         <!--KnowledgeBase-->
         <scene sceneID="EBW-nF-2nA">
             <objects>
-                <tabViewController title="KnowledgeBase" selectedTabViewItemIndex="1" tabStyle="toolbar" id="CtN-I8-ega" sceneMemberID="viewController">
+                <tabViewController title="KnowledgeBase" selectedTabViewItemIndex="1" tabStyle="toolbar" id="CtN-I8-ega" customClass="KnowledgeMainTabViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Add" image="NSAddTemplate" id="xYw-Or-KB8"/>
                         <tabViewItem label="Review" image="NSUserGuest" id="XML-xN-3I2"/>
@@ -813,24 +822,34 @@
                 </tabViewController>
                 <customObject id="WwL-nU-lwL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-80" y="-514.5"/>
+            <point key="canvasLocation" x="-43" y="-764"/>
         </scene>
         <!--Record Query View Controller-->
         <scene sceneID="eWK-cU-nf7">
             <objects>
                 <viewController id="VMq-uq-UEh" customClass="RecordQueryViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="S8U-0S-5el">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="343"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fillProportionally" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ju-S0-fIf">
-                                <rect key="frame" x="0.0" y="-22" width="450" height="322"/>
+                                <rect key="frame" x="0.0" y="-22" width="580" height="365"/>
                                 <subviews>
                                     <stackView autoresizesSubviews="NO" distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykx-Eu-Rx3">
-                                        <rect key="frame" x="0.0" y="300" width="450" height="22"/>
+                                        <rect key="frame" x="0.0" y="343" width="580" height="22"/>
                                         <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K2e-sT-E3X">
+                                                <rect key="frame" x="0.0" y="-2" width="44" height="25"/>
+                                                <buttonCell key="cell" type="roundTextured" title="Back" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PMT-B1-OMd">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="BackFromChild:" target="VMq-uq-UEh" id="YyQ-tG-tbo"/>
+                                                </connections>
+                                            </button>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDD-Ya-BJu">
-                                                <rect key="frame" x="0.0" y="0.0" width="395" height="22"/>
+                                                <rect key="frame" x="44" y="0.0" width="481" height="22"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mYV-OO-AvD">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -838,7 +857,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xtg-L2-wFJ">
-                                                <rect key="frame" x="389" y="-6" width="67" height="32"/>
+                                                <rect key="frame" x="519" y="-6" width="67" height="32"/>
                                                 <buttonCell key="cell" type="push" title="查找" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vHf-dQ-eHd">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -853,19 +872,21 @@
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
                                     <containerView translatesAutoresizingMaskIntoConstraints="NO" id="NN0-fE-NEo">
-                                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                                        <connections>
-                                            <segue destination="m6h-eN-WPt" kind="embed" id="0xQ-ep-w6Z"/>
-                                        </connections>
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="343"/>
                                     </containerView>
                                 </subviews>
+                                <touchBar key="touchBar" id="KBw-fy-nCL">
+                                    <nil name="touchBarItems"/>
+                                </touchBar>
                                 <constraints>
                                     <constraint firstItem="NN0-fE-NEo" firstAttribute="width" secondItem="9ju-S0-fIf" secondAttribute="width" id="gxh-Ge-qth"/>
                                 </constraints>
@@ -887,12 +908,43 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BackButton" destination="K2e-sT-E3X" id="f71-RF-hzZ"/>
+                        <outlet property="DisplayView" destination="NN0-fE-NEo" id="OhE-8J-284"/>
                         <outlet property="SearchKeyword" destination="hDD-Ya-BJu" id="Sc8-bU-gIg"/>
                     </connections>
                 </viewController>
                 <customObject id="Qqk-DK-tly" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-575" y="194"/>
+            <point key="canvasLocation" x="-726" y="-116.5"/>
+        </scene>
+        <!--Display Search Record View Controller-->
+        <scene sceneID="09h-6g-4na">
+            <objects>
+                <viewController storyboardIdentifier="DisplaySearchRecordViewController" id="9nq-Ef-hSp" customClass="DisplaySearchRecordViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="nsN-E3-ZhZ">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8bB-bJ-c2a">
+                                <rect key="frame" x="-6" y="272" width="81" height="32"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7X5-ra-XxP">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="CheckDetail:" target="9nq-Ef-hSp" id="ocf-nW-t1T"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="8bB-bJ-c2a" firstAttribute="top" secondItem="nsN-E3-ZhZ" secondAttribute="top" id="BvC-zR-NVL"/>
+                            <constraint firstItem="8bB-bJ-c2a" firstAttribute="leading" secondItem="nsN-E3-ZhZ" secondAttribute="leading" id="dwK-VR-mWW"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="44o-Jo-BHm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1032" y="338"/>
         </scene>
         <!--Review Main View Controller-->
         <scene sceneID="ilD-2j-NY9">
@@ -1058,7 +1110,7 @@
                 </viewController>
                 <customObject id="EOn-M6-fig" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1348" y="426"/>
+            <point key="canvasLocation" x="812" y="-30"/>
         </scene>
         <!--Review Back View Controller-->
         <scene sceneID="bJU-RR-FaM">
@@ -1123,20 +1175,37 @@
                 </viewController>
                 <customObject id="kmT-CC-Z7c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1365" y="1004"/>
+            <point key="canvasLocation" x="812" y="528"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="GDC-m5-ZMf">
+        <!--Display Record View Controller-->
+        <scene sceneID="DVy-fZ-fLf">
             <objects>
-                <viewController id="m6h-eN-WPt" sceneMemberID="viewController">
-                    <view key="view" id="11z-ru-IKq">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                <viewController storyboardIdentifier="DisplayRecordViewController" id="Ixw-nz-aJh" customClass="DisplayRecordViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Nq5-3p-1Ye">
+                        <rect key="frame" x="0.0" y="0.0" width="416" height="207"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tyt-Ov-YiW">
+                                <rect key="frame" x="-2" y="190" width="65" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="abcdfsadf" id="Kr9-Kj-68b">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Tyt-Ov-YiW" firstAttribute="top" secondItem="Nq5-3p-1Ye" secondAttribute="top" id="O4a-vB-pxp"/>
+                            <constraint firstItem="Tyt-Ov-YiW" firstAttribute="leading" secondItem="Nq5-3p-1Ye" secondAttribute="leading" id="t9F-PT-vQ7"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="DisplayContent" destination="Tyt-Ov-YiW" id="2OW-Pm-O1j"/>
+                    </connections>
                 </viewController>
-                <customObject id="RmT-J1-CTu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="WEN-uO-WFu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-575" y="751"/>
+            <point key="canvasLocation" x="-550" y="391.5"/>
         </scene>
     </scenes>
     <resources>

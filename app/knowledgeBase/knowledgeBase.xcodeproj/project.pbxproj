@@ -12,6 +12,9 @@
 		9222C7B4203FDC3D00FE8050 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9222C7B3203FDC3D00FE8050 /* Assets.xcassets */; };
 		9222C7B7203FDC3D00FE8050 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9222C7B5203FDC3D00FE8050 /* Main.storyboard */; };
 		9222C7C2203FE45300FE8050 /* AdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9222C7C1203FE45300FE8050 /* AdditionViewController.swift */; };
+		924846FA2100CA1B00F86D4E /* DisplayRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924846F92100CA1B00F86D4E /* DisplayRecordViewController.swift */; };
+		924846FC2100CEC300F86D4E /* DisplaySearchRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924846FB2100CEC300F86D4E /* DisplaySearchRecordViewController.swift */; };
+		924846FE2101D9EC00F86D4E /* KnowledgeMainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924846FD2101D9EC00F86D4E /* KnowledgeMainTabViewController.swift */; };
 		925A0C3B2057B42E002CC810 /* ReviewMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C392057B42E002CC810 /* ReviewMainViewController.swift */; };
 		925A0C3E2057BAA3002CC810 /* ReviewBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */; };
 		925A0C4020581CF8002CC810 /* ReviewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925A0C3F20581CF8002CC810 /* ReviewDelegate.swift */; };
@@ -31,6 +34,9 @@
 		9222C7B8203FDC3D00FE8050 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9222C7B9203FDC3D00FE8050 /* knowledgeBase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = knowledgeBase.entitlements; sourceTree = "<group>"; };
 		9222C7C1203FE45300FE8050 /* AdditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionViewController.swift; sourceTree = "<group>"; };
+		924846F92100CA1B00F86D4E /* DisplayRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayRecordViewController.swift; sourceTree = "<group>"; };
+		924846FB2100CEC300F86D4E /* DisplaySearchRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySearchRecordViewController.swift; sourceTree = "<group>"; };
+		924846FD2101D9EC00F86D4E /* KnowledgeMainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeMainTabViewController.swift; sourceTree = "<group>"; };
 		925A0C392057B42E002CC810 /* ReviewMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMainViewController.swift; sourceTree = "<group>"; };
 		925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewBackViewController.swift; sourceTree = "<group>"; };
 		925A0C3F20581CF8002CC810 /* ReviewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDelegate.swift; sourceTree = "<group>"; };
@@ -77,10 +83,13 @@
 				9222C7C1203FE45300FE8050 /* AdditionViewController.swift */,
 				9222C7B3203FDC3D00FE8050 /* Assets.xcassets */,
 				9222C7B5203FDC3D00FE8050 /* Main.storyboard */,
-				920B8FE020D910F0008E3027 /* RecordQueryViewController.swift */,
+				924846FD2101D9EC00F86D4E /* KnowledgeMainTabViewController.swift */,
 				92BA1A7E20511A27003AAFF9 /* ReviewFrontViewController.swift */,
 				925A0C3D2057BAA3002CC810 /* ReviewBackViewController.swift */,
 				925A0C392057B42E002CC810 /* ReviewMainViewController.swift */,
+				920B8FE020D910F0008E3027 /* RecordQueryViewController.swift */,
+				924846FB2100CEC300F86D4E /* DisplaySearchRecordViewController.swift */,
+				924846F92100CA1B00F86D4E /* DisplayRecordViewController.swift */,
 				9222C7B8203FDC3D00FE8050 /* Info.plist */,
 				9222C7B9203FDC3D00FE8050 /* knowledgeBase.entitlements */,
 			);
@@ -133,7 +142,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = PlutoShe;
 				TargetAttributes = {
 					9222C7AB203FDC3D00FE8050 = {
@@ -181,12 +190,15 @@
 				92B3CF4420405302005DF137 /* Record.swift in Sources */,
 				925A0C4020581CF8002CC810 /* ReviewDelegate.swift in Sources */,
 				92D53D2D205E50C700A43C45 /* DataStructure.swift in Sources */,
+				924846FA2100CA1B00F86D4E /* DisplayRecordViewController.swift in Sources */,
 				92BA1A7F20511A27003AAFF9 /* ReviewFrontViewController.swift in Sources */,
+				924846FC2100CEC300F86D4E /* DisplaySearchRecordViewController.swift in Sources */,
 				92D53D30205E56AD00A43C45 /* tmp_ReivewOrder.swift in Sources */,
 				925A0C3B2057B42E002CC810 /* ReviewMainViewController.swift in Sources */,
 				92BA1A8120511AD1003AAFF9 /* Request.swift in Sources */,
 				925A0C3E2057BAA3002CC810 /* ReviewBackViewController.swift in Sources */,
 				920B8FE120D910F0008E3027 /* RecordQueryViewController.swift in Sources */,
+				924846FE2101D9EC00F86D4E /* KnowledgeMainTabViewController.swift in Sources */,
 				9222C7C2203FE45300FE8050 /* AdditionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,6 +231,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -226,6 +239,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -276,6 +290,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -283,6 +298,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

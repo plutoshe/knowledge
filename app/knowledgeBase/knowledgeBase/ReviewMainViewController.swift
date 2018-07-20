@@ -145,9 +145,10 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
         turnToFrontViewController()
     }
     
+
+    
     override func viewWillAppear() {
         self.refreshDisplay()
-        
     }
     
     override func viewDidLoad() {
