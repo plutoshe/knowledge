@@ -60,12 +60,6 @@ class RecordQueryViewController: NSViewController {
         self.addChildViewController(viewController)
         self.DisplayView.addSubview(viewController.view)
         viewController.view.frame = self.DisplayView.bounds
-        
-//        self.DisplayView.addSubview(viewController.view, positioned: NSWindow.OrderingMode.above, relativeTo: nil)
     }
     
-    @IBAction func DisplayRecord(_ sender: Any) {
-        
-        
-    }
 }

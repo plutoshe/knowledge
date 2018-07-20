@@ -12,6 +12,7 @@ class AdditionViewController: NSViewController {
 
     @IBOutlet weak var FrontContent: NSTextField!
     @IBOutlet weak var BackContent: NSTextField!
+    var BackTab = 0
     var mode = "POST"
     var recordRequests = RecordRequest()
     var CurrentRecord: RecordItem? = nil
@@ -83,9 +84,7 @@ class AdditionViewController: NSViewController {
             }
             DispatchQueue.main.async {
                 if let tabBarController = self.parent as? NSTabViewController {
-                    let reviewViewController = tabBarController.childViewControllers[0] as! AdditionViewController
-                    reviewViewController.CurrentRecord = self.CurrentRecord
-                    tabBarController.selectedTabViewItemIndex = 1
+                    tabBarController.selectedTabViewItemIndex = self.BackTab
                 }
             }
         }

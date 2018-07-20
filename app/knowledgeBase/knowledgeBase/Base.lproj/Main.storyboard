@@ -829,43 +829,45 @@
             <objects>
                 <viewController id="VMq-uq-UEh" customClass="RecordQueryViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="S8U-0S-5el">
-                        <rect key="frame" x="0.0" y="0.0" width="580" height="343"/>
+                        <rect key="frame" x="0.0" y="0.0" width="644" height="343"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fillProportionally" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ju-S0-fIf">
-                                <rect key="frame" x="0.0" y="-22" width="580" height="365"/>
+                                <rect key="frame" x="0.0" y="-22" width="644" height="365"/>
                                 <subviews>
                                     <stackView autoresizesSubviews="NO" distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykx-Eu-Rx3">
-                                        <rect key="frame" x="0.0" y="343" width="580" height="22"/>
+                                        <rect key="frame" x="0.0" y="343" width="644" height="22"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K2e-sT-E3X">
                                                 <rect key="frame" x="0.0" y="-2" width="44" height="25"/>
                                                 <buttonCell key="cell" type="roundTextured" title="Back" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PMT-B1-OMd">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent">b</string>
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="BackFromChild:" target="VMq-uq-UEh" id="YyQ-tG-tbo"/>
                                                 </connections>
                                             </button>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDD-Ya-BJu">
-                                                <rect key="frame" x="44" y="0.0" width="481" height="22"/>
+                                                <rect key="frame" x="44" y="0.0" width="545" height="22"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mYV-OO-AvD">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xtg-L2-wFJ">
-                                                <rect key="frame" x="519" y="-6" width="67" height="32"/>
-                                                <buttonCell key="cell" type="push" title="查找" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vHf-dQ-eHd">
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QsE-nX-5tC">
+                                                <rect key="frame" x="583" y="-6" width="67" height="32"/>
+                                                <buttonCell key="cell" type="push" title="查找" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="S4R-bF-0JH">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                                    <string key="keyEquivalent">i</string>
+                                                    <string key="keyEquivalent">s</string>
                                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="Search:" target="VMq-uq-UEh" id="9Fd-EG-km6"/>
+                                                    <action selector="Search:" target="VMq-uq-UEh" id="h3O-4t-Lx2"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -881,7 +883,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <containerView translatesAutoresizingMaskIntoConstraints="NO" id="NN0-fE-NEo">
-                                        <rect key="frame" x="0.0" y="0.0" width="580" height="343"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="644" height="343"/>
                                     </containerView>
                                 </subviews>
                                 <touchBar key="touchBar" id="KBw-fy-nCL">
@@ -1275,25 +1277,83 @@
             <objects>
                 <viewController storyboardIdentifier="DisplayRecordViewController" id="Ixw-nz-aJh" customClass="DisplayRecordViewController" customModule="knowledgeBase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Nq5-3p-1Ye">
-                        <rect key="frame" x="0.0" y="0.0" width="416" height="207"/>
+                        <rect key="frame" x="0.0" y="0.0" width="416" height="37"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tyt-Ov-YiW">
-                                <rect key="frame" x="-2" y="190" width="65" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="abcdfsadf" id="Kr9-Kj-68b">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0j9-5M-c9P">
+                                <rect key="frame" x="0.0" y="0.0" width="416" height="37"/>
+                                <subviews>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dHF-Yf-YpY">
+                                        <rect key="frame" x="0.0" y="17" width="160" height="20"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FlA-s8-0u2">
+                                                <rect key="frame" x="-6" y="-7" width="67" height="31"/>
+                                                <buttonCell key="cell" type="push" title="修改" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bca-vw-VhM">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                    <string key="keyEquivalent">i</string>
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="ModifyRecord:" target="Ixw-nz-aJh" id="Z3g-fq-BU5"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="68V-Xx-ypV">
+                                                <rect key="frame" x="49" y="-7" width="117" height="31"/>
+                                                <buttonCell key="cell" type="push" title="更新复习日期" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rv2-2B-jeO">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent">r</string>
+                                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="UpdateRecordReviewData:" target="Ixw-nz-aJh" id="xMi-94-iwv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="XXO-MC-yf8"/>
+                                            <constraint firstAttribute="height" constant="20" id="pFK-0t-ei0"/>
+                                        </constraints>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b9O-7l-2e3">
+                                        <rect key="frame" x="-2" y="0.0" width="37" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="CNH-1V-t3k">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Tyt-Ov-YiW" firstAttribute="top" secondItem="Nq5-3p-1Ye" secondAttribute="top" id="O4a-vB-pxp"/>
-                            <constraint firstItem="Tyt-Ov-YiW" firstAttribute="leading" secondItem="Nq5-3p-1Ye" secondAttribute="leading" id="t9F-PT-vQ7"/>
+                            <constraint firstAttribute="trailing" secondItem="0j9-5M-c9P" secondAttribute="trailing" id="P8h-gC-Rii"/>
+                            <constraint firstItem="0j9-5M-c9P" firstAttribute="width" secondItem="Nq5-3p-1Ye" secondAttribute="width" id="bVr-VX-k6o"/>
+                            <constraint firstItem="0j9-5M-c9P" firstAttribute="top" secondItem="Nq5-3p-1Ye" secondAttribute="top" id="gyX-lD-q6p"/>
+                            <constraint firstItem="0j9-5M-c9P" firstAttribute="height" secondItem="Nq5-3p-1Ye" secondAttribute="height" id="kIM-WI-tuM"/>
+                            <constraint firstItem="0j9-5M-c9P" firstAttribute="leading" secondItem="Nq5-3p-1Ye" secondAttribute="leading" id="riP-z5-2ie"/>
+                            <constraint firstAttribute="bottom" secondItem="0j9-5M-c9P" secondAttribute="bottom" id="wDN-NW-IxQ"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="DisplayContent" destination="Tyt-Ov-YiW" id="2OW-Pm-O1j"/>
+                        <outlet property="DisplayContent" destination="b9O-7l-2e3" id="9K7-8a-vqZ"/>
                     </connections>
                 </viewController>
                 <customObject id="WEN-uO-WFu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

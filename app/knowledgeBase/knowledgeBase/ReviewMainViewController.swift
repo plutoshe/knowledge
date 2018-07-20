@@ -70,7 +70,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
                 // change the data(remember and review date) of this record
                 // if mode is unreviewed, move it to review array, remove it from unreivewed array
                 if let currentRecord = self.Records.CurrentRecord {
-                    print(currentRecord.ReviewTimes)
+//                    print(currentRecord.ReviewTimes)
                     if self.Records.mode == DisplayModeStatus.UnReviewedRecord && currentRecord.ReviewTimes! <= 1 {
                         if self.currentDate != currentRecord.RememberDate {
                             let requestBody = ReviewPutRequestBody(
@@ -136,6 +136,7 @@ class ReviewMainViewController: NSViewController, ReviewFrontOperationDelegate, 
             let recordViewController = tabBarController.childViewControllers[0] as! AdditionViewController
             recordViewController.CurrentRecord = self.Records.CurrentRecord
             recordViewController.mode = "PUT"
+            recordViewController.BackTab = 1
             tabBarController.selectedTabViewItemIndex = 0
         }
     }

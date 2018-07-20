@@ -44,6 +44,12 @@ class DisplaySearchRecordViewController: NSViewController {
                 print("success!")
                 print(recordItems.count)
                 DispatchQueue.main.async {
+                    if self.tableViewData.count == 0 {
+                        let emptyRecord = RecordItem()
+                        let emptyContent = Content(Form: "TEXT", Data: "No Result")
+                        emptyRecord.Front.append(emptyContent)
+                        self.tableViewData.append(emptyRecord)
+                    }
                     self.SearchRecordTable.reloadData()
                 }
             }
