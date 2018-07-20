@@ -19,8 +19,16 @@ class DisplaySearchRecordViewController: NSViewController {
         super.viewDidLoad()
         self.SearchRecordTable.delegate = self as? NSTableViewDelegate
         self.SearchRecordTable.dataSource = self
+        self.SearchRecordTable.target = self
+        self.SearchRecordTable.doubleAction = #selector(tableViewDoubleClick(_:))
         // Do view setup here.
         
+    }
+    
+    @objc func tableViewDoubleClick(_ sender:AnyObject) {
+        if self.SearchRecordTable.selectedRow >= 0 {
+            CheckDetailFromParent!(tableViewData[self.SearchRecordTable.selectedRow])
+        }
     }
     
     override func viewWillAppear() {
