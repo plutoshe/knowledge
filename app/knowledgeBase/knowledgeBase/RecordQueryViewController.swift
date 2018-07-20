@@ -9,7 +9,7 @@
 import Cocoa
 
 class RecordQueryViewController: NSViewController {
-    var recordRequests = RecordRequest()
+    
     @IBOutlet weak var DisplayView: NSView!
     @IBOutlet weak var SearchKeyword: NSTextField!
     @IBOutlet weak var BackButton: NSButton!
@@ -19,15 +19,6 @@ class RecordQueryViewController: NSViewController {
         BackButton.title = "First"
     }
     
-    override func viewWillAppear() {
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
-        let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "DisplaySearchRecordViewController")) as! DisplaySearchRecordViewController
-        viewController.CheckDetailFromParent = DisplayDetailRecord
-        self.addChildViewController(viewController)
-        viewController.view.frame = self.DisplayView.bounds
-        self.DisplayView.addSubview(viewController.view)
-    }
-    
     @IBAction func Search(_ sender: NSButton) {
         for child in self.childViewControllers {
             child.viewWillDisappear()
@@ -35,10 +26,13 @@ class RecordQueryViewController: NSViewController {
             child.view.removeFromSuperviewWithoutNeedingDisplay()
             child.removeFromParentViewController()
         }
-//        recordRequests.GETRequest(recordGetRequestBody: RecordGetRequestBody(Keyword: SearchKeyword.stringValue)) { data, response, error in
-////            RetrievedData.
-//        }
-        
+        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
+        let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "DisplaySearchRecordViewController")) as! DisplaySearchRecordViewController
+        viewController.CheckDetailFromParent = DisplayDetailRecord
+        viewController.SearchText = SearchKeyword.stringValue
+        self.addChildViewController(viewController)
+        viewController.view.frame = self.DisplayView.bounds
+        self.DisplayView.addSubview(viewController.view)
     }
     
 

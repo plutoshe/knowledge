@@ -33,6 +33,8 @@ class RecordGetRequestBody: Codable {
     }
 }
 
+typealias RecordGetResponseBody = [RecordItem]
+
 class RecordPostRequestBody: Codable {
     var FrontContent : [Content] = []
     var BackContent: [Content] = []
