@@ -12,8 +12,6 @@ type ReviewService struct {
 	ReviewIndex   string
 }
 
-var ReviewServiceHandler *ReviewService
-
 func NewReviewService(recordStorage *mongo.RecordMongo, reviewIndex string) *ReviewService {
 	return &ReviewService{
 		RecordStorage: recordStorage,
@@ -21,36 +19,47 @@ func NewReviewService(recordStorage *mongo.RecordMongo, reviewIndex string) *Rev
 	}
 }
 
-func AddHandler(mux *http.ServeMux, endpoint string, recordStorage *mongo.RecordMongo, reviewIndex string) {
-	ReviewServiceHandler = NewReviewService(recordStorage, reviewIndex)
-	mux.Handle(
-		endpoint,
-		ReviewServiceHandler,
-	)
-}
 
-func AddHandlerBaseOnCurrentConfig(mux *http.ServeMux, endpoint string) {
-	mux.Handle(
-		endpoint,
-		ReviewServiceHandler,
-	)
-}
-
-// operation router
-func (rs *ReviewService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// Method Examination
-	// if !helper.AllowMethod(w, r.Method, "GET") {
-	// 	log.Printf("Method is not permitted, request method=%s.", r.Method)
-	// 	return
-	// }
-
-	// Operation
-	log.Println(r.Header)
-	switch r.Method {
-	case "GET":
-		rs.Query(w, r)
-		break
-	case "PUT":
-		rs.Update(w, r)
+func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody) (ReviewQueryResponseBody, error) {
+	startTime := time.Now()
+	resultUnReviewed, err := rs.RecordStorage.Query(bson.M{
+		"review_date": bson.M{
+			"$lt": params.ReviewDate,
+		},
+	})
+	if err != nil {
+		return nil, err
 	}
+	resultReviewed, err := rs.RecordStorage.Query(bson.M{
+		"remember_date": params.RememberDate,
+	})
+	if err != nil {
+		return nil, err
+	}
+	log.Println(time.Now().Sub(startTime))
+	return ReviewQueryResponseBody{
+		UnReviewedRecord: resultUnReviewed,
+		ReviewedRecord:   resultReviewed,
+	}, nil
+}
+
+
+func (rs *ReviewService) UpdateReviewRecord(params ReviewUpdateRequestBody) {
+	log.Println("===============")
+	log.Println(bson.M{"_id": bson.ObjectIdHex(params.RecordID)})
+	log.Println(bson.M{
+		"review_date":           params.ReviewDate,
+		"remember_date":         params.RememberDate,
+		"current_review_status": params.CurrentReviewStatus,
+	})
+	err = rs.RecordStorage.Update(
+		bson.M{"_id": bson.ObjectIdHex(params.RecordID)},
+		bson.M{
+			"$set": bson.M{
+				"review_date":           params.ReviewDate,
+				"remember_date":         params.RememberDate,
+				"current_review_status": params.CurrentReviewStatus,
+			},
+		},
+	)
 }
