@@ -1,11 +1,11 @@
-package router
+package reviewRouter
 
-// interface
-type ReviewServiceInterface interface {
-	RetrieveData(params ReviewQueryRequestBody) (ReviewQueryResponseBody, error)
-}
+// // interface
+// type ReviewServiceInterface interface {
+// 	RetrieveData(params ReviewQueryRequestBody) (ReviewQueryResponseBody, error)
+// }
 
-// type
-type ReviewRouter struct {
-	reviewService ReviewServiceInterface
-}
+// // type
+// type ReviewRouter struct {
+// 	reviewService ReviewServiceInterface
+// }

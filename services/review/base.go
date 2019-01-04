@@ -2,11 +2,13 @@ package review
 
 import (
 	"log"
-	"net/http"
+	"time"
 
 	"github.com/plutoshe/knowledge/storage/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
+// ReviewService implementing the review interface based on mgo.
 type ReviewService struct {
 	RecordStorage *mongo.RecordMongo
 	ReviewIndex   string
@@ -19,7 +21,6 @@ func NewReviewService(recordStorage *mongo.RecordMongo, reviewIndex string) *Rev
 	}
 }
 
-
 func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody) (ReviewQueryResponseBody, error) {
 	startTime := time.Now()
 	resultUnReviewed, err := rs.RecordStorage.Query(bson.M{
@@ -28,13 +29,13 @@ func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody) (ReviewQuer
 		},
 	})
 	if err != nil {
-		return nil, err
+		return ReviewQueryResponseBody{}, err
 	}
 	resultReviewed, err := rs.RecordStorage.Query(bson.M{
 		"remember_date": params.RememberDate,
 	})
 	if err != nil {
-		return nil, err
+		return ReviewQueryResponseBody{}, err
 	}
 	log.Println(time.Now().Sub(startTime))
 	return ReviewQueryResponseBody{
@@ -43,8 +44,7 @@ func (rs *ReviewService) RetrieveData(params ReviewQueryRequestBody) (ReviewQuer
 	}, nil
 }
 
-
-func (rs *ReviewService) UpdateReviewRecord(params ReviewUpdateRequestBody) {
+func (rs *ReviewService) UpdateReviewRecord(params ReviewUpdateRequestBody) error {
 	log.Println("===============")
 	log.Println(bson.M{"_id": bson.ObjectIdHex(params.RecordID)})
 	log.Println(bson.M{
@@ -52,7 +52,7 @@ func (rs *ReviewService) UpdateReviewRecord(params ReviewUpdateRequestBody) {
 		"remember_date":         params.RememberDate,
 		"current_review_status": params.CurrentReviewStatus,
 	})
-	err = rs.RecordStorage.Update(
+	return rs.RecordStorage.Update(
 		bson.M{"_id": bson.ObjectIdHex(params.RecordID)},
 		bson.M{
 			"$set": bson.M{
